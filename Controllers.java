@@ -61,7 +61,7 @@ public class Controllers extends App{
 
             @FXML
             void CreateGameAction(ActionEvent event) throws Exception{
-                //here the file scenario will be created  (IT WORKS!!!!)
+                //here the file scenario will be created  (IT WORKS!!!! do not touch)
                 try{
                     File scenario = new File("SCENARIOS/scenario_id.txt");
                     scenario.createNewFile();
