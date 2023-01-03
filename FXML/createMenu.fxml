@@ -8,35 +8,47 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-   <Label layoutX="94.0" layoutY="83.0" text="Create Minesweeper Game">
+   <Label layoutX="71.0" layoutY="81.0" text="Create Minesweeper Game">
       <font>
-         <Font name="System Bold" size="20.0" />
+         <Font name="FreeSans Bold" size="20.0" />
       </font>
    </Label>
-      <Button fx:id="creategameButton" layoutX="150.0" layoutY="398.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="101.0" text="Create Game" />
+      <Button fx:id="creategameButton" layoutX="150.0" layoutY="398.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="101.0" text="Create Game">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></Button>
       <Label layoutX="54.0" layoutY="181.0" text="Choose Difficulty">
          <font>
-            <Font size="14.0" />
+            <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
       <Label layoutX="54.0" layoutY="225.0" text="Number of Mines">
          <font>
-            <Font size="14.0" />
+            <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="mines" layoutX="170.0" layoutY="222.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="54.0" layoutY="265.0" text="Time limit (sec)">
          <font>
-            <Font size="14.0" />
+            <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="time" layoutX="170.0" layoutY="261.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="54.0" layoutY="308.0" text="Supermine">
          <font>
-            <Font size="14.0" />
+            <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="difficulty" layoutX="170.0" layoutY="177.0" prefHeight="26.0" prefWidth="150.0" promptText="1: easy, 2: hard" />
-      <TextField fx:id="supermine" layoutX="170.0" layoutY="304.0" prefHeight="26.0" prefWidth="150.0" promptText="0: no, 1: yes" />
-      <Button fx:id="applicationButton" layoutX="150.0" layoutY="454.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="101.0" text="Back" />
+      <TextField fx:id="difficulty" layoutX="170.0" layoutY="177.0" prefHeight="26.0" prefWidth="150.0" promptText="1: easy, 2: hard">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></TextField>
+      <TextField fx:id="supermine" layoutX="170.0" layoutY="304.0" prefHeight="26.0" prefWidth="150.0" promptText="0: no, 1: yes">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></TextField>
+      <Button fx:id="applicationButton" layoutX="150.0" layoutY="454.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="101.0" text="Back">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></Button>
 </children></AnchorPane>

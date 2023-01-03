@@ -9,15 +9,27 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-   <Button fx:id="applicationButton" layoutX="150.0" layoutY="300.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="25.0" prefWidth="100.0" text="Application" />
-   <Button fx:id="detailsButton" layoutX="150.0" layoutY="350.0" mnemonicParsing="false" onAction="#DetailAction" prefHeight="25.0" prefWidth="100.0" text="Details" />
-   <Button fx:id="exitButton" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="25.0" prefWidth="100.0" text="Exit" />
-   <Label layoutX="48.0" layoutY="83.0" text="Welcome to the Minesweeper Game">
+   <Button fx:id="applicationButton" layoutX="150.0" layoutY="300.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="25.0" prefWidth="100.0" text="Application">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></Button>
+   <Button fx:id="detailsButton" layoutX="150.0" layoutY="350.0" mnemonicParsing="false" onAction="#DetailAction" prefHeight="25.0" prefWidth="100.0" text="Details">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></Button>
+   <Button fx:id="exitButton" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="25.0" prefWidth="100.0" text="Exit">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></Button>
+   <Label layoutX="25.0" layoutY="70.0" prefHeight="16.0" prefWidth="352.0" text="Welcome to the Minesweeper Game">
       <font>
-         <Font name="System Bold" size="20.0" />
+         <Font name="FreeSans Bold" size="20.0" />
       </font>
    </Label>
-   <Label layoutX="38.0" layoutY="548.0" text="NTUA - Medialab Project by George Sotiropoulos (el19848)" />
+   <Label layoutX="32.0" layoutY="542.0" text="NTUA - Medialab Project by George Sotiropoulos (el19848)">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font></Label>
    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="125.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@mine.png" />

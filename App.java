@@ -41,7 +41,7 @@ class LaunchApplication extends App{
 
     public void menu() throws Exception{
         try{
-            App.close();
+            //App.close();
             LaunchCreate.close();//if coming from create
             LaunchLoad.close();//if coming from load
             Pane root;
