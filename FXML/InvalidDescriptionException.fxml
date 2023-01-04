@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
+   <children>
+      <Label layoutX="37.0" layoutY="26.0" text="Invalid Description Exception">
+         <font>
+            <Font name="FreeSans" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="33.0" fitWidth="27.0" layoutX="20.0" layoutY="70.0" preserveRatio="true">
+         <image>
+            <Image url="@error-icon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="58.0" layoutY="52.0" prefHeight="82.0" prefWidth="216.0" text="The description provided is not valid as it does not contain information about all attributes of the game (difficulty, mines, time, supermine)" textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
