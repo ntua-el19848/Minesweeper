@@ -102,3 +102,35 @@ class LaunchLoad extends App{
         stage.close();
     }
 }
+
+class LaunchValueException extends App{
+    public void menu() throws Exception{
+        try{
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/InvalidValueException.fxml"));
+            Scene scene = new Scene(root, 300, 150);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+class LaunchDescriptionException extends App{
+    public void menu() throws Exception{
+        try{
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/InvalidDescriptionException.fxml"));
+            Scene scene = new Scene(root, 300, 150);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}

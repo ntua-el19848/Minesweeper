@@ -24,7 +24,7 @@
             <Font name="FreeSans" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="scenario" layoutX="87.0" layoutY="324.0" prefHeight="26.0" prefWidth="230.0" promptText="Name as reffered to SCENARIOS folder">
+      <TextField fx:id="scenario_to_load" layoutX="87.0" layoutY="324.0" prefHeight="26.0" prefWidth="230.0" promptText="Name as reffered to SCENARIOS folder">
          <font>
             <Font name="FreeSans" size="11.0" />
          </font></TextField>

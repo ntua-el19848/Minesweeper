@@ -17,33 +17,33 @@
          <font>
             <Font name="FreeSans" size="13.0" />
          </font></Button>
-      <Label layoutX="54.0" layoutY="181.0" text="Choose Difficulty">
+      <Label layoutX="54.0" layoutY="195.0" text="Choose Difficulty">
          <font>
             <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="54.0" layoutY="225.0" text="Number of Mines">
+      <Label layoutX="54.0" layoutY="235.0" text="Number of Mines">
          <font>
             <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="mines" layoutX="170.0" layoutY="222.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="54.0" layoutY="265.0" text="Time limit (sec)">
+      <TextField fx:id="mines" layoutX="170.0" layoutY="230.0" prefHeight="26.0" prefWidth="150.0" />
+      <Label layoutX="54.0" layoutY="275.0" text="Time limit (sec)">
          <font>
             <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="time" layoutX="170.0" layoutY="261.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="54.0" layoutY="308.0" text="Supermine">
+      <TextField fx:id="time" layoutX="170.0" layoutY="270.0" prefHeight="26.0" prefWidth="150.0" />
+      <Label layoutX="54.0" layoutY="315.0" text="Supermine">
          <font>
             <Font name="FreeSans" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="difficulty" layoutX="170.0" layoutY="177.0" prefHeight="26.0" prefWidth="150.0" promptText="1: easy, 2: hard">
+      <TextField fx:id="difficulty" layoutX="170.0" layoutY="190.0" prefHeight="26.0" prefWidth="150.0" promptText="1: easy, 2: hard">
          <font>
             <Font name="FreeSans" size="13.0" />
          </font></TextField>
-      <TextField fx:id="supermine" layoutX="170.0" layoutY="304.0" prefHeight="26.0" prefWidth="150.0" promptText="0: no, 1: yes">
+      <TextField fx:id="supermine" layoutX="170.0" layoutY="310.0" prefHeight="26.0" prefWidth="150.0" promptText="0: no, 1: yes">
          <font>
             <Font name="FreeSans" size="13.0" />
          </font></TextField>
@@ -51,4 +51,14 @@
          <font>
             <Font name="FreeSans" size="13.0" />
          </font></Button>
+      <Label layoutX="54.0" layoutY="155.0" text="Game Name">
+         <font>
+            <Font name="FreeSans" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="scenarioname" layoutX="170.0" layoutY="150.0" prefHeight="26.0" prefWidth="150.0" promptText="Enter the game name">
+         <font>
+            <Font name="FreeSans" size="13.0" />
+         </font>
+      </TextField>
 </children></AnchorPane>

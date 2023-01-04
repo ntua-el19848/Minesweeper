@@ -36,13 +36,15 @@ public class Controllers extends App{
     @FXML
     private TextField time;
     @FXML
+    private TextField scenarioname;
+    @FXML
     private TextField supermine;
     @FXML
     private TextField difficulty;
     @FXML
     private Button loadgameButton;
     @FXML
-    private TextField scenario;
+    private TextField scenario_to_load;
 
     //application menu
     @FXML
@@ -63,7 +65,8 @@ public class Controllers extends App{
             void CreateGameAction(ActionEvent event) throws Exception{
                 //here the file scenario will be created  (IT WORKS!!!! do not touch)
                 try{
-                    File scenario = new File("SCENARIOS/scenario_id.txt");
+                    String name = scenarioname.getText();
+                    File scenario = new File("SCENARIOS/"+name+".txt");
                     scenario.createNewFile();
 
                     FileWriter fw = new FileWriter(scenario.getAbsoluteFile());
@@ -100,8 +103,10 @@ public class Controllers extends App{
         }
             
             @FXML
-            void LoadGameAction(ActionEvent event) throws Exception{
-                // here a random game will be created....
+            void LoadGameAction(ActionEvent event) throws Exception{ // button action
+                String name = scenario_to_load.getText();
+                Game game = new Game(name);
+                //game.check();
             }
 
         @FXML
