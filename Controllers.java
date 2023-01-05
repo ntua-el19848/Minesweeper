@@ -44,6 +44,8 @@ public class Controllers extends App{
     private Button loadgameButton;
     @FXML
     private TextField scenario_to_load;
+    @FXML
+    private Button startgameButton;
 
     //application menu
     @FXML
@@ -103,9 +105,15 @@ public class Controllers extends App{
             }
 
         @FXML
-        void StartAction(ActionEvent event) {
-
+        void StartAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
+            LaunchStart window = new LaunchStart();
+            window.menu();
         }
+
+            @FXML
+            void StartGameAction(ActionEvent event) throws Exception{
+                
+            }
 
     @FXML
     void DetailAction(ActionEvent event) {
