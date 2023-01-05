@@ -13,15 +13,15 @@ import java.util.Random;
 public class Game{
 
     //initialize the input with -1 so that i know that if some of these values remain -1 --> InvalidDescriptionException
-    private String scenario;
-    private int difficulty=-1;
-    private int mines=-1;
-    private int size=17;
-    private int time=-1;
-    private int supermine=-1;
-    private boolean [][] boardvisible = new boolean[size][size];
-    private int [][] boardhidden = new int[size][size];
-    final int minecode=-1;
+    static private String scenario;
+    static private int difficulty=-1;
+    static private int mines=-1;
+    static private int size=17;
+    static private int time=-1;
+    static private int supermine=-1;
+    static private int [][] boardvisible = new int[size][size];
+    static private int [][] boardhidden = new int[size][size];
+    static final int minecode=-1;
 
     /*  Encoding that I use for the boards
         FOR THE HIDDEN BOARD
@@ -33,50 +33,50 @@ public class Game{
      *  hiddencode -->  FALSE
      */
     
-    public void setDifficulty(int x){
-        this.difficulty = x;
+    public static void setDifficulty(int x){
+        difficulty = x;
         // initilize size and board based on difficulty
-        if(x==1) this.size=9;
-        if(x==2) this.size=16;
+        if(x==1) size=9;
+        if(x==2) size=16;
     }
 
-    public void setMines(int x){
-        this.mines = x;
+    public static void setMines(int x){
+        mines = x;
     }
 
-    public void setSupermine(int x){
-        this.supermine = x;
+    public static void setSupermine(int x){
+        supermine = x;
     }
 
-    public void setTime(int x){
-        this.time = x;
+    public static void setTime(int x){
+        time = x;
     }
 
-    public void setScenario(String x){
-        this.scenario = x;
+    public static void setScenario(String x){
+        scenario = x;
     }
 
-    public int getDifficulty(){
-        return this.difficulty;
+    public static int getDifficulty(){
+        return difficulty;
     }
 
-    public int getMines(){
-        return this.mines;
+    public static int getMines(){
+        return mines;
     }
 
-    public int getSupermine(){
-        return this.supermine;
+    public static int getSupermine(){
+        return supermine;
     }
 
-    public int getTime(){
-        return this.time;
+    public static int getTime(){
+        return time;
     }
 
-    public String getScenario(){
-        return this.scenario;
+    public static String getScenario(){
+        return scenario;
     }
     
-    public Game(String scenario) throws Exception { // (IT WORKS) constructor that initializes the variables from input and checks for the right values.
+    public static void CheckWriteBoard(String scenario) throws Exception { // (IT WORKS) initializes the variables from input and checks for the right values.
         try{
             setScenario(scenario);
             File input = new File("SCENARIOS/"+scenario+".txt");
@@ -117,7 +117,7 @@ public class Game{
                 throw new InvalidValueException("The value of the difficulty, mines, time or supermine does not fit the requirements");
             }
             else{ // all the checks have been made!!!   
-                this.setupBoard();
+                Game.setupBoard();
             }
         }
         catch(FileNotFoundException e){
@@ -130,7 +130,7 @@ public class Game{
         }
     }
 
-    public void setupBoard() throws Exception{ // (IT WORKS) it setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
+    private static void setupBoard() throws Exception{ // (IT WORKS) it setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
         //intialize board with mines
         int var=0;
         while(var!=mines) {
@@ -145,15 +145,15 @@ public class Game{
         WriteBoard();
     }
 
-    private void printhiddenboard(){ // (IT WORKS) prints the hidden board DEBUGGING REASONS
+    private static void printhiddenboard(){ // (IT WORKS) prints the hidden board DEBUGGING REASONS
         System.out.print("\t ");
-        for(int i=0; i<this.size; i++){
+        for(int i=0; i<size; i++){
             System.out.print(" " + (i+1) + "  ");
         }
         System.out.print("\n");
-        for(int i=0; i<this.size; i++){
+        for(int i=0; i<size; i++){
             System.out.print(i+1 + "\t| ");
-            for(int j=0; j<this.size; j++){
+            for(int j=0; j<size; j++){
                 if(boardhidden[i][j]==0){
                     System.out.print("0");
                 }
@@ -169,9 +169,9 @@ public class Game{
         }
     }
 
-    private void BuildBoard(){ // (IT WORKS) builds the rest of the board (except mines) with respect to mine placement
-        for(int i=0; i<this.size; i++){
-            for(int j=0; j<this.size; j++){
+    private static void BuildBoard(){ // (IT WORKS) builds the rest of the board (except mines) with respect to mine placement
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
                 int cnt=0;
                 if(boardhidden[i][j]!=minecode){
                     if(i!=0){
@@ -180,7 +180,7 @@ public class Game{
                             if(boardhidden[i-1][j-1]==minecode) cnt++;
                         }
                     }
-                    if(i!=(this.size-1)){
+                    if(i!=(size-1)){
                         if(boardhidden[i+1][j]==minecode) cnt++;
                         if(j!=9){
                             if(boardhidden[i+1][j+1]==minecode) cnt++;
@@ -192,7 +192,7 @@ public class Game{
                             if(boardhidden[i+1][j-1]==minecode) cnt++;
                         }
                     }
-                    if(j!=(this.size-1)){
+                    if(j!=(size-1)){
                         if(boardhidden[i][j+1]==minecode) cnt++;
                         if(i!=0){
                             if(boardhidden[i-1][j+1]==minecode) cnt++;
@@ -204,17 +204,18 @@ public class Game{
         }
     }
 
-    private void WriteBoard() throws Exception{ // (IT WORKS) writes the BOARD to a file in BOARDS folder
+    private static void WriteBoard() throws Exception{ // (IT WORKS) writes the BOARD to a file in BOARDS folder
         try{
-            String name = scenario;
-            File board = new File("BOARDS/"+name+"_board.txt");
+            //String name = scenario;
+            //File board = new File("BOARDS/"+name+"_board.txt");// etsi an thelw polla
+            File board = new File("BOARDS/loadedboard.txt");//etsi an thelw mono ena
             board.createNewFile();
             FileWriter fw = new FileWriter(board.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
 
-            for(int i=0; i<this.size; i++){
-                for(int j=0; j<this.size; j++){
-                    bw.write(""+this.boardhidden[i][j]+" ");
+            for(int i=0; i<size; i++){
+                for(int j=0; j<size; j++){
+                    bw.write(""+boardhidden[i][j]+" ");
                 }
                 bw.write("\n");
             }
@@ -225,6 +226,43 @@ public class Game{
         }
     }
 
+    private static boolean endGame(){ // IT WORKS
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
+                if(boardvisible[i][j]==0){
+                    if(boardhidden[i][j]!=minecode){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+//=================apo edw kai katw doulevw=================================
+
+
+
+
+    public static void StartGame(){
+        System.out.println("eftases ws to to StartGame with mines= "+mines+"");
+    }
+
+    public static void DisplayHidden(){
+        // gia to solution
+    }
+
+    public static void DisplayVisible(){
+        // to do via calling fix neighboors
+    }
+
+    public static void Move(){
+        // kiniseis tou paixtei tha kaleite apo to controller
+    }
+
+    // +fix visible + fix neighboors
 
 }
 

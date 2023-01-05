@@ -47,6 +47,7 @@ public class Controllers extends App{
     @FXML
     private Button startgameButton;
 
+
     //application menu
     @FXML
     void ApplicationAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
@@ -101,7 +102,8 @@ public class Controllers extends App{
             @FXML
             void LoadGameAction(ActionEvent event) throws Exception{ // button action
                 String name = scenario_to_load.getText();
-                Game game = new Game(name);
+                Game.CheckWriteBoard(name);
+                //Game.StartGame();
             }
 
         @FXML
@@ -112,7 +114,7 @@ public class Controllers extends App{
 
             @FXML
             void StartGameAction(ActionEvent event) throws Exception{
-                
+                Game.StartGame();
             }
 
     @FXML
