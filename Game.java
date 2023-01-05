@@ -1,22 +1,14 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javax.swing.JTextField;
 import java.io.File;
 import java.util.Scanner;
+import java.util.Random;
+
 
 public class Game{
 
@@ -24,15 +16,28 @@ public class Game{
     private String scenario;
     private int difficulty=-1;
     private int mines=-1;
-    private int size;
+    private int size=17;
     private int time=-1;
     private int supermine=-1;
-    private int [][] boardvisible;
-    private int [][] boardhidden;
+    private boolean [][] boardvisible = new boolean[size][size];
+    private int [][] boardhidden = new int[size][size];
+    final int minecode=-1;
+
+    /*  Encoding that I use for the boards
+        FOR THE HIDDEN BOARD
+     *  minecode --> integer that i have assigned (non used) to know if its a mine
+     *  superminecode --> integer that i have assigned (non used) to know if its a mine
+     * 
+     *  FOR THE VISIVBLE BOARD
+     *  displaycode --> TRUE 
+     *  hiddencode -->  FALSE
+     */
     
-    //setters
     public void setDifficulty(int x){
         this.difficulty = x;
+        // initilize size and board based on difficulty
+        if(x==1) this.size=9;
+        if(x==2) this.size=16;
     }
 
     public void setMines(int x){
@@ -51,7 +56,6 @@ public class Game{
         this.scenario = x;
     }
 
-    //getters
     public int getDifficulty(){
         return this.difficulty;
     }
@@ -71,11 +75,8 @@ public class Game{
     public String getScenario(){
         return this.scenario;
     }
-
-
-
-    // constructor that initializes the variables from input and checks for the right values.
-    public Game(String scenario) throws Exception {
+    
+    public Game(String scenario) throws Exception { // (IT WORKS) constructor that initializes the variables from input and checks for the right values.
         try{
             setScenario(scenario);
             File input = new File("SCENARIOS/"+scenario+".txt");
@@ -115,29 +116,131 @@ public class Game{
                 window.menu();
                 throw new InvalidValueException("The value of the difficulty, mines, time or supermine does not fit the requirements");
             }
-            else{
-                // edw einai pou tha sinexisei to flow tou programmatos sthn periptwsh pou ola komple.... (ta leme aurio)
+            else{ // all the checks have been made!!!   
+                this.setupBoard();
             }
+        }
+        catch(FileNotFoundException e){
+            LaunchFileException window = new LaunchFileException();
+            window.menu();
+            e.printStackTrace();
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
-    
+
+    public void setupBoard() throws Exception{ // (IT WORKS) it setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
+        //intialize board with mines
+        int var=0;
+        while(var!=mines) {
+            Random random = new Random();
+            int i = random.nextInt(size-1);
+            int j = random.nextInt(size-1);
+            boardhidden[i][j] = minecode;
+            var++;
+        }
+        BuildBoard();
+        printhiddenboard(); // debugging purpose
+        WriteBoard();
+    }
+
+    private void printhiddenboard(){ // (IT WORKS) prints the hidden board DEBUGGING REASONS
+        System.out.print("\t ");
+        for(int i=0; i<this.size; i++){
+            System.out.print(" " + (i+1) + "  ");
+        }
+        System.out.print("\n");
+        for(int i=0; i<this.size; i++){
+            System.out.print(i+1 + "\t| ");
+            for(int j=0; j<this.size; j++){
+                if(boardhidden[i][j]==0){
+                    System.out.print("0");
+                }
+                else if(boardhidden[i][j]==minecode){
+                    System.out.print("X");
+                }
+                else{
+                    System.out.print(boardhidden[i][j]);
+                }
+                System.out.print(" | ");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    private void BuildBoard(){ // (IT WORKS) builds the rest of the board (except mines) with respect to mine placement
+        for(int i=0; i<this.size; i++){
+            for(int j=0; j<this.size; j++){
+                int cnt=0;
+                if(boardhidden[i][j]!=minecode){
+                    if(i!=0){
+                        if(boardhidden[i-1][j]==minecode) cnt++;
+                        if(j!=0){
+                            if(boardhidden[i-1][j-1]==minecode) cnt++;
+                        }
+                    }
+                    if(i!=(this.size-1)){
+                        if(boardhidden[i+1][j]==minecode) cnt++;
+                        if(j!=9){
+                            if(boardhidden[i+1][j+1]==minecode) cnt++;
+                        }
+                    }
+                    if(j!=0){
+                        if(boardhidden[i][j-1]==minecode) cnt++;
+                        if(i!=9){
+                            if(boardhidden[i+1][j-1]==minecode) cnt++;
+                        }
+                    }
+                    if(j!=(this.size-1)){
+                        if(boardhidden[i][j+1]==minecode) cnt++;
+                        if(i!=0){
+                            if(boardhidden[i-1][j+1]==minecode) cnt++;
+                        }
+                    }
+                    boardhidden[i][j] = cnt;
+                }
+            }
+        }
+    }
+
+    private void WriteBoard() throws Exception{ // (IT WORKS) writes the BOARD to a file in BOARDS folder
+        try{
+            String name = scenario;
+            File board = new File("BOARDS/"+name+"_board.txt");
+            board.createNewFile();
+            FileWriter fw = new FileWriter(board.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for(int i=0; i<this.size; i++){
+                for(int j=0; j<this.size; j++){
+                    bw.write(""+this.boardhidden[i][j]+" ");
+                }
+                bw.write("\n");
+            }
+            bw.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
-class InvalidValueException extends Exception
-{
-    public InvalidValueException(String message)
-    {
+
+
+
+
+// EXCEPTION CLASSES
+class InvalidValueException extends Exception{
+    public InvalidValueException(String message){
         super(message);
     }
 }
 
-class InvalidDescriptionException extends Exception
-{
-    public InvalidDescriptionException(String message)
-    {
+class InvalidDescriptionException extends Exception{
+    public InvalidDescriptionException(String message){
         super(message);
     }
 }

@@ -9,6 +9,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
+// THIS .java FILE CONTAINS ALL THE CODE FOR GENERATING JAVAFX WINDOWS AND NOTHING ELSE....
+// THE MEANINGFULL CODE THAT RUNS THE BOARD AND THE GAME IS IN THE Game.java
+
 public class App extends Application {
     
     public static void main(String[] args) {
@@ -124,6 +127,22 @@ class LaunchDescriptionException extends App{
         try{
             Pane root;
             root = FXMLLoader.load(getClass().getResource("FXML/InvalidDescriptionException.fxml"));
+            Scene scene = new Scene(root, 300, 150);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+class LaunchFileException extends App{
+    public void menu() throws Exception{
+        try{
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/FileNotFoundException.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);

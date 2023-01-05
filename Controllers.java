@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javax.swing.JTextField;
 
-
 public class Controllers extends App{
 
     @FXML
@@ -48,22 +47,20 @@ public class Controllers extends App{
 
     //application menu
     @FXML
-    void ApplicationAction(ActionEvent event) throws Exception{
-        //na kleinei to proigoumeno
+    void ApplicationAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
+        stage.close();
         LaunchApplication window = new LaunchApplication();
         window.menu();
     }
 
         @FXML
-        void CreateAction(ActionEvent event) throws Exception{
-            //na kleinei to proigoumeno
+        void CreateAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
             LaunchCreate window = new LaunchCreate();
             window.menu();
         }
 
             @FXML
-            void CreateGameAction(ActionEvent event) throws Exception{
-                //here the file scenario will be created  (IT WORKS!!!! do not touch)
+            void CreateGameAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
                 try{
                     String name = scenarioname.getText();
                     File scenario = new File("SCENARIOS/"+name+".txt");
@@ -89,15 +86,12 @@ public class Controllers extends App{
                 catch(Exception e){
                     e.printStackTrace();
                 }
-                //THELW NA ME PETAEI PISO STO LAUNCH APPLICATION
-
                 LaunchApplication applicationWindow = new LaunchApplication();
                 applicationWindow.menu();
             }
 
-
         @FXML
-        void LoadAction(ActionEvent event) throws Exception{
+        void LoadAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
             LaunchLoad window = new LaunchLoad();
             window.menu();
         }
@@ -106,7 +100,6 @@ public class Controllers extends App{
             void LoadGameAction(ActionEvent event) throws Exception{ // button action
                 String name = scenario_to_load.getText();
                 Game game = new Game(name);
-                //game.check();
             }
 
         @FXML
@@ -121,7 +114,7 @@ public class Controllers extends App{
 
     @FXML
     void ExitAction(ActionEvent event) throws Exception{
-        super.stage.close();
+        stage.close();
     }
 
 
