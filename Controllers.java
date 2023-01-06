@@ -103,7 +103,6 @@ public class Controllers extends App{
             void LoadGameAction(ActionEvent event) throws Exception{ // button action
                 String name = scenario_to_load.getText();
                 Game.CheckWriteBoard(name);
-                //Game.StartGame();
             }
 
         @FXML

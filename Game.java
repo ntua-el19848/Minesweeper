@@ -14,11 +14,11 @@ public class Game{
 
     //initialize the input with -1 so that i know that if some of these values remain -1 --> InvalidDescriptionException
     static private String scenario;
-    static private int difficulty=-1;
-    static private int mines=-1;
+    static private int difficulty;
+    static private int mines;
     static private int size=17;
-    static private int time=-1;
-    static private int supermine=-1;
+    static private int time;
+    static private int supermine;
     static private int [][] boardvisible = new int[size][size];
     static private int [][] boardhidden = new int[size][size];
     static final int minecode=-1;
@@ -78,10 +78,15 @@ public class Game{
     
     public static void CheckWriteBoard(String scenario) throws Exception { // (IT WORKS) initializes the variables from input and checks for the right values.
         try{
-            setScenario(scenario);
             File input = new File("SCENARIOS/"+scenario+".txt");
             Scanner scan = new Scanner(input);
 
+            // initialize with -1 just for the description check.
+            setDifficulty(-1);
+            setMines(-1);
+            setTime(-1);
+            setSupermine(-1);
+            
             // Invalid Description Exception Check!
             if(scan.hasNext()) setDifficulty(scan.nextInt());
             if(scan.hasNext()) setMines(scan.nextInt());
@@ -125,8 +130,8 @@ public class Game{
             window.menu();
             e.printStackTrace();
         }
-        catch(Exception e){
-            e.printStackTrace();
+        finally{
+            //printStackTrace();
         }
     }
 
