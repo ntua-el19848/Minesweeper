@@ -8,57 +8,57 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-   <Label layoutX="71.0" layoutY="81.0" text="Create Minesweeper Game">
+   <Label layoutX="62.0" layoutY="81.0" text="Create Minesweeper Game">
       <font>
-         <Font name="FreeSans Bold" size="20.0" />
+         <Font name="MesloLGS NF Bold" size="20.0" />
       </font>
    </Label>
-      <Button fx:id="creategameButton" layoutX="150.0" layoutY="398.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="101.0" text="Create Game">
+      <Button fx:id="creategameButton" layoutX="143.0" layoutY="404.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="116.0" text="Create Game">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-      <Label layoutX="54.0" layoutY="195.0" text="Choose Difficulty">
+      <Label layoutX="38.0" layoutY="195.0" text="Choose Difficulty">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="54.0" layoutY="235.0" text="Number of Mines">
+      <Label layoutX="38.0" layoutY="235.0" text="Number of Mines">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="mines" layoutX="170.0" layoutY="230.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="54.0" layoutY="275.0" text="Time limit (sec)">
+      <TextField fx:id="mines" layoutX="189.0" layoutY="230.0" prefHeight="26.0" prefWidth="170.0" />
+      <Label layoutX="38.0" layoutY="275.0" text="Time limit (sec)">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="time" layoutX="170.0" layoutY="270.0" prefHeight="26.0" prefWidth="150.0" />
-      <Label layoutX="54.0" layoutY="315.0" text="Supermine">
+      <TextField fx:id="time" layoutX="189.0" layoutY="270.0" prefHeight="26.0" prefWidth="170.0" />
+      <Label layoutX="38.0" layoutY="315.0" text="Supermine">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="difficulty" layoutX="170.0" layoutY="190.0" prefHeight="26.0" prefWidth="150.0" promptText="1: easy, 2: hard">
+      <TextField fx:id="difficulty" layoutX="189.0" layoutY="190.0" prefHeight="26.0" prefWidth="170.0" promptText="1: easy, 2: hard">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></TextField>
-      <TextField fx:id="supermine" layoutX="170.0" layoutY="310.0" prefHeight="26.0" prefWidth="150.0" promptText="0: no, 1: yes">
+      <TextField fx:id="supermine" layoutX="189.0" layoutY="310.0" prefHeight="26.0" prefWidth="170.0" promptText="0: no, 1: yes">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></TextField>
-      <Button fx:id="applicationButton" layoutX="150.0" layoutY="454.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="101.0" text="Back">
+      <Button fx:id="applicationButton" layoutX="143.0" layoutY="460.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="116.0" text="Back">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-      <Label layoutX="54.0" layoutY="155.0" text="Game Name">
+      <Label layoutX="38.0" layoutY="155.0" text="Game Name">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="scenarioname" layoutX="170.0" layoutY="150.0" prefHeight="26.0" prefWidth="150.0" promptText="Enter the game name">
+      <TextField fx:id="scenarioname" layoutX="189.0" layoutY="150.0" prefHeight="26.0" prefWidth="170.0" promptText="Enter the game name">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font>
       </TextField>
 </children></AnchorPane>

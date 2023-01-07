@@ -9,18 +9,18 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-   <Label layoutX="80.0" layoutY="60.0" text="Start Minesweeper Game">
+   <Label layoutX="68.0" layoutY="60.0" text="Start Minesweeper Game">
       <font>
-         <Font name="FreeSans Bold" size="20.0" />
+         <Font name="MesloLGS NF Bold" size="20.0" />
       </font>
    </Label>
       <Button fx:id="startgameButton" layoutX="150.0" layoutY="343.0" mnemonicParsing="false" onAction="#StartGameAction" prefHeight="34.0" prefWidth="101.0" text="Start Game">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
       <Button fx:id="applicationButton" layoutX="150.0" layoutY="407.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="101.0" text="Back">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="125.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -29,7 +29,7 @@
       </ImageView>
       <Label layoutX="34.0" layoutY="495.0" prefHeight="58.0" prefWidth="333.0" text="By pressing the button &quot;Start Game&quot; you will play the game that was last loaded." wrapText="true">
          <font>
-            <Font name="FreeSans Oblique" size="14.0" />
+            <Font name="MesloLGS NF Italic" size="14.0" />
          </font>
       </Label>
 </children></AnchorPane>

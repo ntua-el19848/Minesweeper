@@ -8,19 +8,19 @@
 
 <AnchorPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
    <children>
-      <Label layoutX="59.0" layoutY="26.0" prefHeight="21.0" prefWidth="182.0" text="Invalid Value Exception">
+      <Label layoutX="24.0" layoutY="24.0" prefHeight="23.0" prefWidth="253.0" text="Invalid Value Exception">
          <font>
-            <Font name="FreeSans" size="18.0" />
+            <Font name="MesloLGS NF Bold" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="37.0" fitWidth="29.0" layoutX="21.0" layoutY="66.0" preserveRatio="true">
+      <ImageView fitHeight="37.0" fitWidth="29.0" layoutX="21.0" layoutY="70.0" preserveRatio="true">
          <image>
             <Image url="@error-icon.png" />
          </image>
       </ImageView>
-      <Label layoutX="59.0" layoutY="47.0" prefHeight="77.0" prefWidth="206.0" text="The value of the difficulty, mines, time or supermine does not fit the requirements" textAlignment="JUSTIFY" wrapText="true">
+      <Label layoutX="59.0" layoutY="47.0" prefHeight="82.0" prefWidth="207.0" text="The value of the difficulty, mines, time or supermine does not fit the requirements" textAlignment="JUSTIFY" wrapText="true">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
    </children>

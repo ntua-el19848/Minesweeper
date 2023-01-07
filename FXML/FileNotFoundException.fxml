@@ -8,9 +8,9 @@
 
 <AnchorPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
    <children>
-      <Label layoutX="80.0" layoutY="26.0" prefHeight="21.0" prefWidth="140.0" text="Game Not Found">
+      <Label layoutX="74.0" layoutY="24.0" prefHeight="23.0" prefWidth="152.0" text="Game Not Found">
          <font>
-            <Font name="FreeSans" size="18.0" />
+            <Font name="MesloLGS NF Bold" size="18.0" />
          </font>
       </Label>
       <ImageView fitHeight="37.0" fitWidth="29.0" layoutX="21.0" layoutY="68.0" preserveRatio="true">
@@ -18,9 +18,9 @@
             <Image url="@error-icon.png" />
          </image>
       </ImageView>
-      <Label layoutX="59.0" layoutY="47.0" prefHeight="77.0" prefWidth="206.0" text="The game you want to Load has not been created." textAlignment="JUSTIFY" wrapText="true">
+      <Label layoutX="59.0" layoutY="47.0" prefHeight="77.0" prefWidth="219.0" text="The game you want to Load has not been created." textAlignment="JUSTIFY" wrapText="true">
          <font>
-            <Font name="FreeSans" size="14.0" />
+            <Font name="MesloLGS NF Regular" size="14.0" />
          </font>
       </Label>
    </children>

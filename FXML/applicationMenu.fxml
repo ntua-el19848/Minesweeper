@@ -9,34 +9,34 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-   <Button fx:id="createButton" layoutX="150.0" layoutY="300.0" mnemonicParsing="false" onAction="#CreateAction" prefHeight="25.0" prefWidth="100.0" text="Create Game">
+   <Button fx:id="createButton" layoutX="147.0" layoutY="300.0" mnemonicParsing="false" onAction="#CreateAction" prefHeight="26.0" prefWidth="107.0" text="Create Game">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-   <Button fx:id="loadButton" layoutX="150.0" layoutY="350.0" mnemonicParsing="false" onAction="#LoadAction" prefHeight="25.0" prefWidth="100.0" text="Load Game">
+   <Button fx:id="loadButton" layoutX="147.0" layoutY="350.0" mnemonicParsing="false" onAction="#LoadAction" prefHeight="26.0" prefWidth="107.0" text="Load Game">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-   <Button fx:id="exitButton" layoutX="150.0" layoutY="450.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="25.0" prefWidth="100.0" text="Exit">
+   <Button fx:id="exitButton" layoutX="147.0" layoutY="450.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="26.0" prefWidth="107.0" text="Exit">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-   <Label layoutX="78.0" layoutY="77.0" text="Minesweeper Application">
+   <Label layoutX="62.0" layoutY="75.0" text="Minesweeper Application">
       <font>
-         <Font name="FreeSans Bold" size="20.0" />
+         <Font name="MesloLGS NF Bold" size="20.0" />
       </font>
    </Label>
-   <Label layoutX="38.0" layoutY="548.0" text="NTUA - Medialab Project by George Sotiropoulos (el19848)">
+   <Label layoutX="31.0" layoutY="532.0" prefHeight="39.0" prefWidth="340.0" text="NTUA - Medialab Project by George Sotiropoulos (el19848)" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="12.0" />
          </font></Label>
    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="125.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@mine.png" />
       </image>
    </ImageView>
-   <Button fx:id="startButton" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" onAction="#StartAction" prefHeight="25.0" prefWidth="100.0" text="Start Game">
+   <Button fx:id="startButton" layoutX="147.0" layoutY="400.0" mnemonicParsing="false" onAction="#StartAction" prefHeight="26.0" prefWidth="107.0" text="Start Game">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
 </children></AnchorPane>

@@ -9,26 +9,26 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-   <Button fx:id="applicationButton" layoutX="150.0" layoutY="300.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="25.0" prefWidth="100.0" text="Application">
+   <Button fx:id="applicationButton" layoutX="144.0" layoutY="300.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="26.0" prefWidth="112.0" text="Application">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-   <Button fx:id="detailsButton" layoutX="150.0" layoutY="350.0" mnemonicParsing="false" onAction="#DetailAction" prefHeight="25.0" prefWidth="100.0" text="Details">
+   <Button fx:id="detailsButton" layoutX="144.0" layoutY="350.0" mnemonicParsing="false" onAction="#DetailAction" prefHeight="26.0" prefWidth="112.0" text="Details">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-   <Button fx:id="exitButton" layoutX="150.0" layoutY="400.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="25.0" prefWidth="100.0" text="Exit">
+   <Button fx:id="exitButton" layoutX="144.0" layoutY="400.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="26.0" prefWidth="112.0" text="Exit">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-   <Label layoutX="47.0" layoutY="70.0" prefHeight="26.0" prefWidth="306.0" text="Welcome to the Minesweeper Game">
+   <Label layoutX="22.0" layoutY="73.0" prefHeight="27.0" prefWidth="358.0" text="Welcome to the Minesweeper Game">
       <font>
-         <Font name="FreeSans Bold" size="20.0" />
+         <Font name="MesloLGS NF Bold" size="19.0" />
       </font>
    </Label>
-   <Label layoutX="32.0" layoutY="542.0" text="NTUA - Medialab Project by George Sotiropoulos (el19848)">
+   <Label layoutX="29.0" layoutY="517.0" prefHeight="47.0" prefWidth="343.0" text="NTUA - Medialab Project by George Sotiropoulos (el19848)" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="FreeSans" size="13.0" />
+            <Font name="MesloLGS NF Regular" size="12.0" />
          </font></Label>
    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="125.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
       <image>
