@@ -43,6 +43,10 @@ public class Controllers extends App{
     @FXML
     private Button loadgameButton;
     @FXML
+    private Button solutionButton;
+    @FXML
+    private Button roundsButton;
+    @FXML
     private TextField scenario_to_load;
     @FXML
     private Button startgameButton;
@@ -117,9 +121,21 @@ public class Controllers extends App{
             }
 
     @FXML
-    void DetailAction(ActionEvent event) {
-
+    void DetailAction(ActionEvent event) throws Exception {
+        LaunchDetails window = new LaunchDetails();
+        window.menu();
     }
+
+        @FXML
+        void SolutionAction(ActionEvent event) {
+            
+        }
+
+        @FXML
+        void RoundsAction(ActionEvent event) {
+            
+        }
+
 
     @FXML
     void ExitAction(ActionEvent event) throws Exception{
