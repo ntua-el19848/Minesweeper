@@ -137,15 +137,23 @@ public class Game{
 
     private static void setupBoard() throws Exception{ // (IT WORKS) it setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
         //intialize board with mines
+        File minesfile = new File("mines/mines.txt");//etsi an thelw mono ena
+        minesfile.createNewFile();
+        FileWriter fw = new FileWriter(minesfile.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+
         int var=0;
         while(var!=mines) {
             Random random = new Random();
             int i = random.nextInt(size-1);
             int j = random.nextInt(size-1);
             boardhidden[i][j] = minecode;
+            bw.write(""+i+", "+j+", 0");
+            bw.write("\n");
             var++;
         }
-        BuildBoard();
+        bw.close();
+        BuildBoard(); // debugging exact board
         printhiddenboard(); // debugging purpose
         WriteBoard();
     }
