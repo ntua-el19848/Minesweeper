@@ -22,6 +22,7 @@ public class Game{
     static private int [][] boardvisible = new int[size][size];
     static private int [][] boardhidden = new int[size][size];
     static final int minecode=-1;
+    static final int superminecode=-2;
 
     /*  Encoding that I use for the boards
         FOR THE HIDDEN BOARD
@@ -142,8 +143,28 @@ public class Game{
         FileWriter fw = new FileWriter(minesfile.getAbsoluteFile());
         BufferedWriter bw = new BufferedWriter(fw);
 
+        
         int var=0;
-        while(var!=mines) {
+        while(var!=mines-1) {
+            Random random = new Random();
+            int i = random.nextInt(size-1);
+            int j = random.nextInt(size-1);
+            boardhidden[i][j] = minecode;
+            bw.write(""+i+", "+j+", 0"); // edw thelei kai thn periptwsh supermine
+            bw.write("\n");
+            var++;
+        }
+
+        if (supermine==1){
+            Random random = new Random();
+            int i = random.nextInt(size-1);
+            int j = random.nextInt(size-1);
+            boardhidden[i][j] = superminecode;
+            bw.write(""+i+", "+j+", 1"); 
+            bw.write("\n");
+            var++;
+        }
+        else{
             Random random = new Random();
             int i = random.nextInt(size-1);
             int j = random.nextInt(size-1);
@@ -152,6 +173,7 @@ public class Game{
             bw.write("\n");
             var++;
         }
+
         bw.close();
         BuildBoard(); // debugging exact board
         printhiddenboard(); // debugging purpose
@@ -173,6 +195,9 @@ public class Game{
                 else if(boardhidden[i][j]==minecode){
                     System.out.print("X");
                 }
+                else if(boardhidden[i][j]==superminecode){
+                    System.out.print("S");
+                }
                 else{
                     System.out.print(boardhidden[i][j]);
                 }
@@ -183,7 +208,7 @@ public class Game{
     }
 
     private static void BuildBoard(){ // (IT WORKS) builds the rest of the board (except mines) with respect to mine placement
-        for(int i=0; i<size; i++){
+        for(int i=0; i<size; i++){ //NEEDS ADDITION TO SUPERMINE
             for(int j=0; j<size; j++){
                 int cnt=0;
                 if(boardhidden[i][j]!=minecode){
