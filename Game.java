@@ -22,7 +22,7 @@ public class Game{
     static private int [][] boardvisible = new int[size][size];
     static private int [][] boardhidden = new int[size][size];
     static final int minecode=-1;
-    static final int superminecode=-2;
+    static final int superminecode=-200;
 
     /*  Encoding that I use for the boards
         FOR THE HIDDEN BOARD
@@ -138,11 +138,10 @@ public class Game{
 
     private static void setupBoard() throws Exception{ // (IT WORKS) it setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
         //intialize board with mines
-        File minesfile = new File("mines/mines.txt");//etsi an thelw mono ena
+        File minesfile = new File("mines/mines.txt");
         minesfile.createNewFile();
         FileWriter fw = new FileWriter(minesfile.getAbsoluteFile());
         BufferedWriter bw = new BufferedWriter(fw);
-
         
         int var=0;
         while(var!=mines-1) {
@@ -150,7 +149,7 @@ public class Game{
             int i = random.nextInt(size-1);
             int j = random.nextInt(size-1);
             boardhidden[i][j] = minecode;
-            bw.write(""+i+", "+j+", 0"); // edw thelei kai thn periptwsh supermine
+            bw.write(""+i+", "+j+", 0");
             bw.write("\n");
             var++;
         }
@@ -208,32 +207,32 @@ public class Game{
     }
 
     private static void BuildBoard(){ // (IT WORKS) builds the rest of the board (except mines) with respect to mine placement
-        for(int i=0; i<size; i++){ //NEEDS ADDITION TO SUPERMINE
+        for(int i=0; i<size; i++){ 
             for(int j=0; j<size; j++){
                 int cnt=0;
-                if(boardhidden[i][j]!=minecode){
+                if(boardhidden[i][j]!=minecode && boardhidden[i][j]!=superminecode){
                     if(i!=0){
-                        if(boardhidden[i-1][j]==minecode) cnt++;
+                        if(boardhidden[i-1][j]==minecode || boardhidden[i-1][j]==superminecode) cnt++;
                         if(j!=0){
-                            if(boardhidden[i-1][j-1]==minecode) cnt++;
+                            if(boardhidden[i-1][j-1]==minecode || boardhidden[i-1][j-1]==superminecode) cnt++;
                         }
                     }
                     if(i!=(size-1)){
-                        if(boardhidden[i+1][j]==minecode) cnt++;
+                        if(boardhidden[i+1][j]==minecode || boardhidden[i+1][j]==superminecode) cnt++;
                         if(j!=9){
-                            if(boardhidden[i+1][j+1]==minecode) cnt++;
+                            if(boardhidden[i+1][j+1]==minecode || boardhidden[i+1][j+1]==superminecode) cnt++;
                         }
                     }
                     if(j!=0){
-                        if(boardhidden[i][j-1]==minecode) cnt++;
+                        if(boardhidden[i][j-1]==minecode || boardhidden[i][j-1]==superminecode) cnt++;
                         if(i!=9){
-                            if(boardhidden[i+1][j-1]==minecode) cnt++;
+                            if(boardhidden[i+1][j-1]==minecode || boardhidden[i+1][j-1]==superminecode) cnt++;
                         }
                     }
                     if(j!=(size-1)){
-                        if(boardhidden[i][j+1]==minecode) cnt++;
+                        if(boardhidden[i][j+1]==minecode || boardhidden[i][j+1]==superminecode) cnt++;
                         if(i!=0){
-                            if(boardhidden[i-1][j+1]==minecode) cnt++;
+                            if(boardhidden[i-1][j+1]==minecode || boardhidden[i-1][j+1]==superminecode) cnt++;
                         }
                     }
                     boardhidden[i][j] = cnt;
