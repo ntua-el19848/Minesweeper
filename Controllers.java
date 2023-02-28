@@ -106,7 +106,9 @@ public class Controllers extends App{
             @FXML
             void LoadGameAction(ActionEvent event) throws Exception{ // button action
                 String name = scenario_to_load.getText();
-                Game.CheckWriteBoard(name);
+                Game.ValidationCheck(name);
+                LaunchStart window = new LaunchStart();
+                window.menu();
             }
 
         @FXML
@@ -117,6 +119,7 @@ public class Controllers extends App{
 
             @FXML
             void StartGameAction(ActionEvent event) throws Exception{
+                Game.setupBoard();
                 Game.StartGame();
             }
 
@@ -136,19 +139,16 @@ public class Controllers extends App{
             
         }
 
-
+    // exit between inner stages
     @FXML
     void ExitAction(ActionEvent event) throws Exception{
         stage.close();
     }
 
 
-
-
-
-
-
-
-
-
-}
+    // exit from program
+    @FXML
+    void MainExitAction(ActionEvent event) throws Exception{ 
+        System.exit(0);
+    }
+};

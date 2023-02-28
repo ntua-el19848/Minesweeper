@@ -38,7 +38,7 @@ public class App extends Application {
     public static void close(){
         stage.close();
     }
-}
+};
 
 class LaunchApplication extends App{
 
@@ -62,7 +62,7 @@ class LaunchApplication extends App{
     public static void close(){
         stage.close();
     }
-}
+};
 
 class LaunchCreate extends App{
     public void menu() throws Exception{
@@ -83,7 +83,7 @@ class LaunchCreate extends App{
     public static void close(){
         stage.close();
     }
-}
+};
 
 class LaunchLoad extends App{
     public void menu() throws Exception{
@@ -104,7 +104,7 @@ class LaunchLoad extends App{
     public static void close(){
         stage.close();
     }
-}
+};
 
 class LaunchValueException extends App{
     public void menu() throws Exception{
@@ -120,7 +120,7 @@ class LaunchValueException extends App{
             e.printStackTrace();
         }
     }
-}
+};
 
 class LaunchDescriptionException extends App{
     public void menu() throws Exception{
@@ -136,7 +136,7 @@ class LaunchDescriptionException extends App{
             e.printStackTrace();
         }
     }
-}
+};
 
 class LaunchFileException extends App{
     public void menu() throws Exception{
@@ -152,7 +152,7 @@ class LaunchFileException extends App{
             e.printStackTrace();
         }
     }
-}
+};
 
 class LaunchStart extends App{
     public void menu() throws Exception{
@@ -173,7 +173,7 @@ class LaunchStart extends App{
     public static void close(){
         stage.close();
     }
-}
+};
 
 class LaunchDetails extends App{
     public void menu() throws Exception{
@@ -194,4 +194,4 @@ class LaunchDetails extends App{
     public static void close(){
         stage.close();
     }
-}
+};
