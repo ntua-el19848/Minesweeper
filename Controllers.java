@@ -13,9 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javax.swing.JTextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 public class Controllers extends App{
 
+    @FXML
+    private GridPane displayed_board;
     @FXML
     private Button createButton;
     @FXML
@@ -111,16 +115,20 @@ public class Controllers extends App{
                 window.menu();
             }
 
+        //Menu StartGame
         @FXML
         void StartAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
             LaunchStart window = new LaunchStart();
             window.menu();
         }
 
+            // button start game inside menu
             @FXML
             void StartGameAction(ActionEvent event) throws Exception{
                 Game.setupBoard();
                 Game.StartGame();
+                LaunchGame window = new LaunchGame();
+                window.menu();
             }
 
     @FXML
@@ -150,5 +158,10 @@ public class Controllers extends App{
     @FXML
     void MainExitAction(ActionEvent event) throws Exception{ 
         System.exit(0);
+    }
+
+        @FXML
+    void CheckedBox(MouseEvent event) {
+
     }
 };

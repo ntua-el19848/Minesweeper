@@ -195,3 +195,24 @@ class LaunchDetails extends App{
         stage.close();
     }
 };
+
+class LaunchGame extends App{
+    public void menu() throws Exception{
+        try{
+            LaunchApplication.close();
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/smallboard.fxml"));
+            Scene scene = new Scene(root, 400, 600);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void close(){
+        stage.close();
+    }
+};
