@@ -1,2 +1,7 @@
 makefile
-*.class
+Controllers.class
+App.class
+Game.class
+mines/mines.txt
+SCENARIOS/
+BOARDS/loadedboard.txt
