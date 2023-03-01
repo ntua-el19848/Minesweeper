@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
+   <children>
+      <Label layoutX="90.0" layoutY="24.0" prefHeight="23.0" prefWidth="120.0" text="Bad Request">
+         <font>
+            <Font name="MesloLGS NF Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="37.0" fitWidth="29.0" layoutX="21.0" layoutY="68.0" preserveRatio="true">
+         <image>
+            <Image url="@error-icon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="59.0" layoutY="47.0" prefHeight="77.0" prefWidth="219.0" text="You are trying to start a non valid game. Please load a valid game and try again!" textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font name="MesloLGS NF Regular" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -11,10 +11,7 @@ import java.util.Random;
 
 
 // This Class is the game class that manages the initialization, creation, flow of the game
-
 public class Game{
-
-
 
     /*
     Methods this class  supports:
@@ -53,7 +50,7 @@ public class Game{
 
 
 
-    
+    // Setters
     public static void setDifficulty(int x){
         difficulty = x;
         // initilize size and board based on difficulty
@@ -77,6 +74,12 @@ public class Game{
         scenario = x;
     }
 
+    public static void setScenarioValidity(boolean x){
+        scenario_validity = x;
+    }
+
+
+    // Getters
     public static int getDifficulty(){
         return difficulty;
     }
@@ -97,15 +100,19 @@ public class Game{
         return scenario;
     }
 
-    public static void setScenarioValidity(boolean x){
-        scenario_validity = x;
-    }
-
     public static boolean getScenarioValidity(){
         return scenario_validity;
     }
-    
-    public static void ValidationCheck(String scenario) throws Exception { // (IT WORKS) initializes the variables from input and checks for the right values.
+
+    public static int getBoardValue(int i, int j){
+        return boardhidden[i][j];
+    }
+
+
+    // Other Methods
+
+    // Initializes the variables from input and checks for the right values.
+    public static void ValidationCheck(String scenario) throws Exception { 
         try{
             File input = new File("SCENARIOS/"+scenario+".txt");
             Scanner scan = new Scanner(input);
@@ -144,81 +151,75 @@ public class Game{
                         }
                 default: valid=false;
             }
-
             if(!valid){
                 LaunchValueException window = new LaunchValueException();
                 window.menu();
+                setScenarioValidity(false);
                 throw new InvalidValueException("The value of the difficulty, mines, time or supermine does not fit the requirements");
             }
             else{ // all the checks have been made!!!   
-                //Game.setupBoard();
                 setScenarioValidity(true);
             }
         }
         catch(FileNotFoundException e){
             LaunchFileException window = new LaunchFileException();
             window.menu();
+            setScenarioValidity(false);
             e.printStackTrace();
-        }
-        finally{
-            //printStackTrace();
         }
     }
 
-    public static void setupBoard() throws Exception{ // (IT WORKS) it setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
+    // It setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
+    public static void setupBoard() throws Exception{ 
         //intialize board with mines
         //and write the coordinates of the mines in the mines.txt file
         //this function only randomly generates mine placement and does not fill the entire board!
-        if (getScenarioValidity()){
-            System.out.println("made it here");
-            File minesfile = new File("mines/mines.txt");
-            minesfile.createNewFile();
-            FileWriter fw = new FileWriter(minesfile.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            
-            int var=0;
-            // to not have two mines randomly placed in same place
-            //int random_placements[getMines()];
 
-            while(var!=getMines()-1) {
-                Random random = new Random();
-                int i = random.nextInt(size-1);
-                int j = random.nextInt(size-1);
-                boardhidden[i][j] = minecode;
-                bw.write(""+i+", "+j+", 0");
-                bw.write("\n");
-                var++;
-            }
+        File minesfile = new File("mines/mines.txt");
+        minesfile.createNewFile();
+        FileWriter fw = new FileWriter(minesfile.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+        int var=0;
+        // to not have two mines randomly placed in same place
+        //int random_placements[getMines()];
 
-            if (supermine==1){
-                Random random = new Random();
-                int i = random.nextInt(size-1);
-                int j = random.nextInt(size-1);
-                boardhidden[i][j] = superminecode;
-                bw.write(""+i+", "+j+", 1");
-                var++;
-            }
-            else{
-                Random random = new Random();
-                int i = random.nextInt(size-1);
-                int j = random.nextInt(size-1);
-                boardhidden[i][j] = minecode;
-                bw.write(""+i+", "+j+", 0");
-                var++;
-            }
+        while(var!=getMines()-1) {
+            Random random = new Random();
+            int i = random.nextInt(size-1);
+            int j = random.nextInt(size-1);
+            boardhidden[i][j] = minecode;
+            bw.write(""+i+", "+j+", 0");
+            bw.write("\n");
+            var++;
+        }
 
-            bw.close();
-            BuildBoard();
-            printhiddenboard(); // debugging purpose
-            WriteBoard();
+        if (supermine==1){
+            Random random = new Random();
+            int i = random.nextInt(size-1);
+            int j = random.nextInt(size-1);
+            boardhidden[i][j] = superminecode;
+            bw.write(""+i+", "+j+", 1");
+            var++;
         }
         else{
-            // not valid
-            System.out.println("Scenario not Valid");
+            Random random = new Random();
+            int i = random.nextInt(size-1);
+            int j = random.nextInt(size-1);
+            boardhidden[i][j] = minecode;
+            bw.write(""+i+", "+j+", 0");
+            var++;
         }
+
+        bw.close();
+        BuildBoard();
+        printhiddenboard(); // debugging purpose
+        WriteBoard();
     }
 
-    private static void printhiddenboard(){ // (IT WORKS) prints the hidden board DEBUGGING REASONS
+
+    // Prints the hidden board DEBUGGING REASONS
+    private static void printhiddenboard(){ 
         System.out.print("\t ");
         for(int i=0; i<size; i++){
             System.out.print(" " + (i+1) + "  ");
@@ -245,7 +246,8 @@ public class Game{
         }
     }
 
-    private static void BuildBoard(){ // (IT WORKS) builds the rest of the board (except mines) with respect to mine placement
+    // Builds the rest of the board (except mines) with respect to mine placement
+    private static void BuildBoard(){ 
         for(int i=0; i<size; i++){ 
             for(int j=0; j<size; j++){
                 int cnt=0;
@@ -280,7 +282,8 @@ public class Game{
         }
     }
 
-    private static void WriteBoard() throws Exception{ // (IT WORKS) writes the BOARD to a file in BOARDS folder
+    // Writes the BOARD to a file in BOARDS folder
+    private static void WriteBoard() throws Exception{ 
         try{
             File board = new File("BOARDS/loadedboard.txt");//etsi an thelw mono ena
             board.createNewFile();
@@ -300,7 +303,7 @@ public class Game{
         }
     }
 
-    private static boolean endGame(){ // IT WORKS
+    private static boolean endGame(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
                 if(boardvisible[i][j]==0){

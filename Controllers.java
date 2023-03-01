@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javax.swing.JTextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
 
 public class Controllers extends App{
 
@@ -111,8 +112,10 @@ public class Controllers extends App{
             void LoadGameAction(ActionEvent event) throws Exception{ // button action
                 String name = scenario_to_load.getText();
                 Game.ValidationCheck(name);
-                LaunchStart window = new LaunchStart();
-                window.menu();
+                if(Game.getScenarioValidity()){
+                    LaunchStart window = new LaunchStart();
+                    window.menu();
+                }
             }
 
         //Menu StartGame
@@ -125,10 +128,19 @@ public class Controllers extends App{
             // button start game inside menu
             @FXML
             void StartGameAction(ActionEvent event) throws Exception{
-                Game.setupBoard();
-                Game.StartGame();
-                LaunchGame window = new LaunchGame();
-                window.menu();
+                if(Game.getScenarioValidity()){
+                    // to start a valid loaded game
+                    Game.setupBoard();
+                    Game.StartGame();
+                    LaunchGame window = new LaunchGame();
+                    window.menu();
+                }
+                else{
+                    // to not start a non valid game
+                    LanuchInvalidGameException window = new LanuchInvalidGameException();
+                    window.menu();
+                }
+
             }
 
     @FXML
