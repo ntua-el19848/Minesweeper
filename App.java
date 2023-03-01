@@ -201,11 +201,27 @@ class LaunchGame extends App{
         try{
             LaunchApplication.close();
             Pane root;
-            root = FXMLLoader.load(getClass().getResource("FXML/smallboard.fxml"));
-            Scene scene = new Scene(root, 400, 600);
-            stage.setTitle("Minesweeper Medialab");
-            stage.setScene(scene);
-            stage.show();
+
+            // if difficulty level is 1 go load small board
+            if(Game.getDifficulty()==1){
+                root = FXMLLoader.load(getClass().getResource("FXML/smallboard.fxml"));
+                Scene scene = new Scene(root, 400, 600);
+                stage.setTitle("Minesweeper Medialab");
+                stage.setScene(scene);
+                stage.show();
+            }
+            // if difficulty level is 2 go load large board
+            else if(Game.getDifficulty()==2){
+                root = FXMLLoader.load(getClass().getResource("FXML/largeboard.fxml"));
+                Scene scene = new Scene(root, 500, 700);
+                stage.setTitle("Minesweeper Medialab");
+                stage.setScene(scene);
+                stage.show();
+            }
+            else{
+                System.out.println("Something Went terribly Wrong");
+            }
+        
         }
         catch(Exception e){
             e.printStackTrace();

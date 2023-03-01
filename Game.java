@@ -303,6 +303,7 @@ public class Game{
         }
     }
 
+    // Condition that checks whether the game has ended or not
     private static boolean endGame(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
@@ -315,13 +316,6 @@ public class Game{
         }
         return true;
     }
-
-
-
-//=================apo edw kai katw doulevw=================================
-
-
-
 
     public static void StartGame(){
         System.out.println("eftases ws to to StartGame with time= "+time+"");
