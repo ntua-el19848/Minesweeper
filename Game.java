@@ -1,13 +1,16 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.ResourceBundle;
-import java.io.File;
 import java.util.Scanner;
 import java.util.Random;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 
 // This Class is the game class that manages the initialization, creation, flow of the game
@@ -48,8 +51,6 @@ public class Game{
      *  hiddencode -->  FALSE
      */
 
-
-
     // Setters
     public static void setDifficulty(int x){
         difficulty = x;
@@ -78,6 +79,14 @@ public class Game{
         scenario_validity = x;
     }
 
+    private static void InitializeVisibleBoard(){
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
+                // code for visible initialazation
+                boardvisible[i][j]=-10;
+            }
+        }
+    }
 
     // Getters
     public static int getDifficulty(){
@@ -105,6 +114,10 @@ public class Game{
     }
 
     public static int getBoardValue(int i, int j){
+        return boardvisible[i][j];
+    }
+
+    public static int getHiddenBoardValue(int i, int j){
         return boardhidden[i][j];
     }
 
@@ -122,6 +135,7 @@ public class Game{
             setMines(-1);
             setTime(-1);
             setSupermine(-1);
+            InitializeVisibleBoard();
             
             // Invalid Description Exception Check!
             if(scan.hasNext()) setDifficulty(scan.nextInt());
@@ -171,6 +185,7 @@ public class Game{
 
     // It setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
     public static void setupBoard() throws Exception{ 
+
         //intialize board with mines
         //and write the coordinates of the mines in the mines.txt file
         //this function only randomly generates mine placement and does not fill the entire board!
@@ -213,7 +228,7 @@ public class Game{
 
         bw.close();
         BuildBoard();
-        printhiddenboard(); // debugging purpose
+        //printhiddenboard(); // debugging purpose
         WriteBoard();
     }
 
@@ -305,6 +320,9 @@ public class Game{
 
     // Condition that checks whether the game has ended or not
     private static boolean endGame(){
+        if(getTime()==0){
+            return true;
+        }
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
                 if(boardvisible[i][j]==0){
@@ -317,20 +335,138 @@ public class Game{
         return true;
     }
 
-    public static void StartGame(){
-        System.out.println("eftases ws to to StartGame with time= "+time+"");
+    // method that runs when game is being started
+    public static void StartGame() throws Exception{
+        try{
+            Pane root = new Pane();
+            Stage stage = new Stage();
+            root = FXMLLoader.load(Game.class.getResource("FXML/board.fxml"));
+            stage.setTitle("Minesweeper Game");
+            Label timesec = new Label(""+getTime()+"");
+            timesec.setLayoutX(120);
+            timesec.setLayoutY(115);
+
+            Button btn[][] = DisplayVisible();
+
+            GridPane grid = new GridPane();
+                for(int i=0; i<size; i++){
+                    for(int j=0; j<size; j++){                      
+                        grid.add(btn[i][j], j,i);
+                    }
+                } 
+            grid.setLayoutX(51);
+            grid.setLayoutY(160);
+
+            root.getChildren().add(grid);
+            root.getChildren().add(timesec);
+            if(getDifficulty()==1){
+                Scene scene = new Scene(root, 400, 600);
+                stage.setScene(scene);
+                stage.show();
+            }
+            else{
+                Scene scene = new Scene(root, 600, 800);
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public static void DisplayHidden(){
-        // gia to solution
+    // method called to retrieve solution
+    public static void Solution() throws Exception{
+        // the game has to be played once to show solution
+        try{
+            Pane root = new Pane();
+            if(getDifficulty()==1 || getDifficulty()==2){
+                Stage stage = new Stage();
+                root = FXMLLoader.load(Game.class.getResource("FXML/solution.fxml"));
+                stage.setTitle("Minesweeper Game");
+
+                Button[][] btn = new Button[size][size];
+
+                for(int i=0; i<size; i++){
+                    for(int j=0; j<size; j++){   
+                        if(getHiddenBoardValue(i,j)==-1){
+                            btn[i][j] = new Button("X");
+                            btn[i][j].setPrefSize(30,30);
+                        }
+                        else if(getHiddenBoardValue(i,j)==-2){
+                            btn[i][j] = new Button("S");
+                            btn[i][j].setPrefSize(30,30);
+                        }
+                        else{
+                            btn[i][j] = new Button(""+getHiddenBoardValue(i,j)+"");
+                            btn[i][j].setPrefSize(30,30);
+                        }
+                    }
+                }
+
+                GridPane grid = new GridPane();
+                for(int i=0; i<size; i++){
+                    for(int j=0; j<size; j++){                      
+                        grid.add(btn[i][j], j,i);
+                    }
+                }
+
+                grid.setLayoutX(50);
+                grid.setLayoutY(175);
+                root.getChildren().add(grid);
+                if(getDifficulty()==1){
+                    Scene scene = new Scene(root, 400, 600);
+                    stage.setScene(scene);
+                    stage.show();
+                }
+                else{
+                    Scene scene = new Scene(root, 600, 800);
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            }
+            else{
+                System.out.println("Something Went terribly Wrong");
+            }
+        
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public static void DisplayVisible(){
-        // to do via calling fix neighboors
+    // returns the visible board in button array  
+    public static Button[][] DisplayVisible(){
+        // initialize buttons
+        Button[][] btn = new Button[size][size];
+        // for every button put the right value 
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
+                if(getBoardValue(i,j)==-1){
+                    btn[i][j] = new Button("X");
+                    btn[i][j].setPrefSize(30,30);
+                }
+                else if(getBoardValue(i,j)==-2){
+                    btn[i][j] = new Button("S");
+                    btn[i][j].setPrefSize(30,30);
+                }
+                else if(getBoardValue(i, j)==-10){
+                    btn[i][j] = new Button();
+                    btn[i][j].setPrefSize(30,30);
+
+                }
+                else{
+                    btn[i][j] = new Button(""+getBoardValue(i,j)+"");
+                    btn[i][j].setPrefSize(30,30);
+                }
+            }
+        }
+
+        return btn;
     }
 
+    // Move Method
     public static void Move(){
-        // kiniseis tou paixtei tha kaleite apo to controller
     }
 
     // +fix visible + fix neighboors

@@ -3,15 +3,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 // THIS .java FILE CONTAINS ALL THE CODE FOR GENERATING JAVAFX WINDOWS AND NOTHING ELSE....
 // THE MEANINGFULL CODE THAT RUNS THE BOARD AND THE GAME IS IN THE Game.java
 
+
+// App class that is first loaded and loads the main Menu of the game
 public class App extends Application {
     
     public static void main(String[] args) {
@@ -40,6 +38,7 @@ public class App extends Application {
     }
 };
 
+// Class that loads the application menu
 class LaunchApplication extends App{
 
     public void menu() throws Exception{
@@ -64,6 +63,7 @@ class LaunchApplication extends App{
     }
 };
 
+// Class that loads the create menu to create a game description
 class LaunchCreate extends App{
     public void menu() throws Exception{
         try{
@@ -85,6 +85,7 @@ class LaunchCreate extends App{
     }
 };
 
+// Class that loads the load menu to load a game description (checks validity)
 class LaunchLoad extends App{
     public void menu() throws Exception{
         try{
@@ -106,6 +107,7 @@ class LaunchLoad extends App{
     }
 };
 
+// Class that loads the exception window when values in desctiption do not meet the requirements
 class LaunchValueException extends App{
     public void menu() throws Exception{
         try{
@@ -122,6 +124,7 @@ class LaunchValueException extends App{
     }
 };
 
+// Class that loads the exception window when description does not meet the requirements
 class LaunchDescriptionException extends App{
     public void menu() throws Exception{
         try{
@@ -138,6 +141,7 @@ class LaunchDescriptionException extends App{
     }
 };
 
+// Class that loads the exception window when desctiption not found
 class LaunchFileException extends App{
     public void menu() throws Exception{
         try{
@@ -154,6 +158,7 @@ class LaunchFileException extends App{
     }
 };
 
+// Class that loads the start game window
 class LaunchStart extends App{
     public void menu() throws Exception{
         try{
@@ -175,6 +180,7 @@ class LaunchStart extends App{
     }
 };
 
+// Class that loads the details window
 class LaunchDetails extends App{
     public void menu() throws Exception{
         try{
@@ -194,45 +200,9 @@ class LaunchDetails extends App{
     public static void close(){
         stage.close();
     }
-};
+};      
 
-class LaunchGame extends App{
-    public void menu() throws Exception{
-        try{
-            LaunchApplication.close();
-            Pane root;
-
-            // if difficulty level is 1 go load small board
-            if(Game.getDifficulty()==1){
-                root = FXMLLoader.load(getClass().getResource("FXML/smallboard.fxml"));
-                Scene scene = new Scene(root, 400, 600);
-                stage.setTitle("Minesweeper Medialab");
-                stage.setScene(scene);
-                stage.show();
-            }
-            // if difficulty level is 2 go load large board
-            else if(Game.getDifficulty()==2){
-                root = FXMLLoader.load(getClass().getResource("FXML/largeboard.fxml"));
-                Scene scene = new Scene(root, 500, 700);
-                stage.setTitle("Minesweeper Medialab");
-                stage.setScene(scene);
-                stage.show();
-            }
-            else{
-                System.out.println("Something Went terribly Wrong");
-            }
-        
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void close(){
-        stage.close();
-    }
-};
-
+// Class that loads the exception window when trying to start an invalid game (or not loaded game)
 class LanuchInvalidGameException extends App{
     public void menu() throws Exception{
         try{
