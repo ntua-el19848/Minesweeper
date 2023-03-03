@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 
 // This Class is the game class that manages the initialization, creation, flow of the game
@@ -32,6 +33,8 @@ public class Game{
     static private String scenario;
     static private int difficulty;
     static private int mines;
+    static private boolean endgame;
+    static private int status=0; // status=0 (playing), status=1(won), status=-1(lost)
     static private int size=17;
     static private int time;
     static private int supermine;
@@ -40,6 +43,8 @@ public class Game{
     static final int minecode=-1;
     static final int superminecode=-200;
     static private boolean scenario_validity = false;
+    static private Button btn[][] = new Button[size][size];
+    static private int moves=0;
 
     /*  Encoding that I use for the boards
         FOR THE HIDDEN BOARD
@@ -84,6 +89,15 @@ public class Game{
             for(int j=0; j<size; j++){
                 // code for visible initialazation
                 boardvisible[i][j]=-10;
+            }
+        }
+    }
+
+    private static void InitializeButtons(){
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
+                // code for visible initialazation
+                btn[i][j] = new Button();
             }
         }
     }
@@ -136,6 +150,7 @@ public class Game{
             setTime(-1);
             setSupermine(-1);
             InitializeVisibleBoard();
+            InitializeButtons();
             
             // Invalid Description Exception Check!
             if(scan.hasNext()) setDifficulty(scan.nextInt());
@@ -319,7 +334,7 @@ public class Game{
     }
 
     // Condition that checks whether the game has ended or not
-    private static boolean endGame(){
+    private static boolean endGameMove(){
         if(getTime()==0){
             return true;
         }
@@ -338,32 +353,98 @@ public class Game{
     // method that runs when game is being started
     public static void StartGame() throws Exception{
         try{
+            // initialize root Pane 
             Pane root = new Pane();
+            // initialize stage
             Stage stage = new Stage();
             root = FXMLLoader.load(Game.class.getResource("FXML/board.fxml"));
             stage.setTitle("Minesweeper Game");
-            Label timesec = new Label(""+getTime()+"");
-            timesec.setLayoutX(120);
+
+            // label for time
+            Label timesec = new Label("Time: "+getTime()+"");
+            timesec.setLayoutX(51);
             timesec.setLayoutY(115);
+            timesec.setFont(new Font("MesloLGS NF Bold", 18));
 
-            Button btn[][] = DisplayVisible();
+            // initialize the visible board buttons to be in sync with boardvisible array
+            FixVisible();
 
+            // no of moves label
+            Label MovesLabel = new Label("Moves: "+moves+"");
+            MovesLabel.setLayoutX(201);
+            MovesLabel.setLayoutY(115);
+            MovesLabel.setFont(new Font("MesloLGS NF Bold", 18));
+
+            // initialize grid
             GridPane grid = new GridPane();
-                for(int i=0; i<size; i++){
-                    for(int j=0; j<size; j++){                      
-                        grid.add(btn[i][j], j,i);
-                    }
-                } 
+
+            // for loop to add all buttons to grid and add lambda function to handle button events
+            for(int i=0; i<size; i++){
+                for(int j=0; j<size; j++){ 
+                    // some tricks to get around errors
+                    int x = i; // x -axis
+                    int y = j; // y -axis
+                    
+                    // add buttons to grid
+                    grid.add(btn[i][j], j,i);
+
+                    // button event handler
+                    btn[i][j].setOnAction(e -> {
+                        try{
+                            // register and handle the move via Move method (fix neighboors etc)
+                            Move(x,y);
+                            // sync changes with button board and modified boardvisible
+                            FixVisible();
+                            // sync moves label with moves number
+                            MovesLabel.setText("Moves: "+moves+"");
+
+                            // in case of ending game
+                            if (endgame){
+                                if(status==1){
+                                    //won
+
+                                }
+                                else if(status==-1){
+                                    //lost
+                                    System.out.println("You Have Lost");
+                                    LanuchLostPrompt window = new LanuchLostPrompt();
+                                    // save state that you lost in a file
+                                    //===========!!!!=======
+
+                                    // close running game
+                                    stage.close();
+                                    Solution();
+                                    Game.class.wait(5);
+                                    window.menu();
+                                }
+                                else {
+                                    // something wrong
+                                    System.out.println("Something went terribly wrong, status and endgame are not in sync");
+                                }
+                            }
+                        }
+                        catch(Exception E){
+                            E.printStackTrace();
+                        }
+                    });                    
+                }
+            } 
+            // grid layout
             grid.setLayoutX(51);
             grid.setLayoutY(160);
 
+            // add all elements to root pane
             root.getChildren().add(grid);
+            root.getChildren().add(MovesLabel);
             root.getChildren().add(timesec);
+
+            // if game in difficulty 1 -> load small window
             if(getDifficulty()==1){
                 Scene scene = new Scene(root, 400, 600);
                 stage.setScene(scene);
                 stage.show();
             }
+            // if game in difficulty 2 -> load large window
             else{
                 Scene scene = new Scene(root, 600, 800);
                 stage.setScene(scene);
@@ -385,21 +466,21 @@ public class Game{
                 root = FXMLLoader.load(Game.class.getResource("FXML/solution.fxml"));
                 stage.setTitle("Minesweeper Game");
 
-                Button[][] btn = new Button[size][size];
+                Button[][] sol = new Button[size][size];
 
                 for(int i=0; i<size; i++){
                     for(int j=0; j<size; j++){   
                         if(getHiddenBoardValue(i,j)==-1){
-                            btn[i][j] = new Button("X");
-                            btn[i][j].setPrefSize(30,30);
+                            sol[i][j] = new Button("X");
+                            sol[i][j].setPrefSize(30,30);
                         }
                         else if(getHiddenBoardValue(i,j)==-2){
-                            btn[i][j] = new Button("S");
-                            btn[i][j].setPrefSize(30,30);
+                            sol[i][j] = new Button("S");
+                            sol[i][j].setPrefSize(30,30);
                         }
                         else{
-                            btn[i][j] = new Button(""+getHiddenBoardValue(i,j)+"");
-                            btn[i][j].setPrefSize(30,30);
+                            sol[i][j] = new Button(""+getHiddenBoardValue(i,j)+"");
+                            sol[i][j].setPrefSize(30,30);
                         }
                     }
                 }
@@ -407,7 +488,7 @@ public class Game{
                 GridPane grid = new GridPane();
                 for(int i=0; i<size; i++){
                     for(int j=0; j<size; j++){                      
-                        grid.add(btn[i][j], j,i);
+                        grid.add(sol[i][j], j,i);
                     }
                 }
 
@@ -435,41 +516,51 @@ public class Game{
         }
     }
 
-    // returns the visible board in button array  
-    public static Button[][] DisplayVisible(){
+    // fixes the visible board in button array  
+    private static void FixVisible(){
         // initialize buttons
-        Button[][] btn = new Button[size][size];
         // for every button put the right value 
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
                 if(getBoardValue(i,j)==-1){
-                    btn[i][j] = new Button("X");
+                    btn[i][j].setText("X");
                     btn[i][j].setPrefSize(30,30);
                 }
                 else if(getBoardValue(i,j)==-2){
-                    btn[i][j] = new Button("S");
+                    btn[i][j].setText("S");
                     btn[i][j].setPrefSize(30,30);
                 }
                 else if(getBoardValue(i, j)==-10){
-                    btn[i][j] = new Button();
+                    btn[i][j].setText("");
                     btn[i][j].setPrefSize(30,30);
 
                 }
                 else{
-                    btn[i][j] = new Button(""+getBoardValue(i,j)+"");
+                    btn[i][j].setText(""+getBoardValue(i, j)+"");
                     btn[i][j].setPrefSize(30,30);
                 }
             }
         }
-
-        return btn;
     }
 
     // Move Method
-    public static void Move(){
+    private static void Move(int i, int j){
+        boardvisible[i][j] = boardhidden[i][j];
+        moves++;
+        if (boardhidden[i][j]==-1 || boardhidden[i][j]==-2){
+            endgame=true;
+            status=-1;
+        }
+        // if you press a zero calculate which blocks should open as well
+        // if (boardhidden[i][j]==-10){
+        //     FixNeighboors(i,j);
+        // }
     }
 
-    // +fix visible + fix neighboors
+    // Fix Neighboors (which displayed blocks should change and which not) in case of picking zero
+    private static void FixNeighboors(int i, int j){
+        
+    }
 
 };
 

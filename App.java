@@ -43,7 +43,6 @@ class LaunchApplication extends App{
 
     public void menu() throws Exception{
         try{
-            //App.close();
             LaunchCreate.close();//if coming from create
             LaunchLoad.close();//if coming from load
             Pane root;
@@ -184,7 +183,6 @@ class LaunchStart extends App{
 class LaunchDetails extends App{
     public void menu() throws Exception{
         try{
-            LaunchApplication.close();
             Pane root;
             root = FXMLLoader.load(getClass().getResource("FXML/detailsMenu.fxml"));
             Scene scene = new Scene(root, 400, 600);
@@ -200,7 +198,24 @@ class LaunchDetails extends App{
     public static void close(){
         stage.close();
     }
-};      
+};  
+
+// Class that loads when you have lost a game
+class LanuchLostPrompt extends App{
+    public void menu() throws Exception{
+        try{
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/lost.fxml"));
+            Scene scene = new Scene(root, 300, 150);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+};
 
 // Class that loads the exception window when trying to start an invalid game (or not loaded game)
 class LanuchInvalidGameException extends App{

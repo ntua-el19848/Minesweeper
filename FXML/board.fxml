@@ -14,9 +14,4 @@
          <Font name="MesloLGS NF Bold" size="20.0" />
       </font>
    </Label>
-      <Label layoutX="51.0" layoutY="110.0" text="Time:">
-         <font>
-            <Font name="MesloLGS NF Bold" size="19.0" />
-         </font>
-      </Label>
 </children></AnchorPane>
