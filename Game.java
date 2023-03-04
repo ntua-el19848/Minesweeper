@@ -4,12 +4,16 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.Random;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
@@ -45,6 +49,7 @@ public class Game{
     static private boolean scenario_validity = false;
     static private Button btn[][] = new Button[size][size];
     static private int moves=0;
+    static private int flags=0;
 
     /*  Encoding that I use for the boards
         FOR THE HIDDEN BOARD
@@ -141,7 +146,7 @@ public class Game{
     // Initializes the variables from input and checks for the right values.
     public static void ValidationCheck(String scenario) throws Exception { 
         try{
-            File input = new File("SCENARIOS/"+scenario+".txt");
+            File input = new File("medialab/"+scenario+".txt");
             Scanner scan = new Scanner(input);
 
             // initialize with -1 just for the description check.
@@ -149,8 +154,12 @@ public class Game{
             setMines(-1);
             setTime(-1);
             setSupermine(-1);
+
+            // these are special resetes
             InitializeVisibleBoard();
             InitializeButtons();
+            flags = 0;
+            moves = 0;
             
             // Invalid Description Exception Check!
             if(scan.hasNext()) setDifficulty(scan.nextInt());
@@ -243,10 +252,9 @@ public class Game{
 
         bw.close();
         BuildBoard();
-        //printhiddenboard(); // debugging purpose
+        printhiddenboard(); // debugging purpose
         WriteBoard();
     }
-
 
     // Prints the hidden board DEBUGGING REASONS
     private static void printhiddenboard(){ 
@@ -340,7 +348,7 @@ public class Game{
         }
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                if(boardvisible[i][j]==0){
+                if(boardvisible[i][j]==-10){
                     if(boardhidden[i][j]!=minecode){
                         return false;
                     }
@@ -362,18 +370,24 @@ public class Game{
 
             // label for time
             Label timesec = new Label("Time: "+getTime()+"");
-            timesec.setLayoutX(51);
+            timesec.setLayoutX(50);
             timesec.setLayoutY(115);
-            timesec.setFont(new Font("MesloLGS NF Bold", 18));
+            timesec.setFont(new Font("MesloLGS NF Bold", 16));
 
             // initialize the visible board buttons to be in sync with boardvisible array
             FixVisible();
 
-            // no of moves label
-            Label MovesLabel = new Label("Moves: "+moves+"");
-            MovesLabel.setLayoutX(201);
-            MovesLabel.setLayoutY(115);
-            MovesLabel.setFont(new Font("MesloLGS NF Bold", 18));
+            // no of Mines label
+            Label Mines = new Label("Mines: "+mines+"");
+            Mines.setLayoutX(150);
+            Mines.setLayoutY(115);
+            Mines.setFont(new Font("MesloLGS NF Bold", 16));
+
+            // no of flags label
+            Label Flags = new Label("Flags: "+flags+"");
+            Flags.setLayoutX(250);
+            Flags.setLayoutY(115);
+            Flags.setFont(new Font("MesloLGS NF Bold", 16));
 
             // initialize grid
             GridPane grid = new GridPane();
@@ -388,45 +402,59 @@ public class Game{
                     // add buttons to grid
                     grid.add(btn[i][j], j,i);
 
-                    // button event handler
-                    btn[i][j].setOnAction(e -> {
-                        try{
-                            // register and handle the move via Move method (fix neighboors etc)
-                            Move(x,y);
-                            // sync changes with button board and modified boardvisible
-                            FixVisible();
-                            // sync moves label with moves number
-                            MovesLabel.setText("Moves: "+moves+"");
+                    btn[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-                            // in case of ending game
-                            if (endgame){
-                                if(status==1){
-                                    //won
+                        @Override
+                        public void handle(MouseEvent event) {
+                            MouseButton button = event.getButton();
+                            if(button==MouseButton.PRIMARY){
+                                try{
+                                    // register and handle the move via Move method (fix neighboors etc)
+                                    Move(x,y);
 
-                                }
-                                else if(status==-1){
-                                    //lost
-                                    System.out.println("You Have Lost");
-                                    LanuchLostPrompt window = new LanuchLostPrompt();
-                                    // save state that you lost in a file
-                                    //===========!!!!=======
+                                    // in case of ending game
+                                    if (endgame){
+                                        if(status==1){
+                                            //won
+        
+                                        }
+                                        else if(status==-1){
+                                            //lost
+                                            InitializeVisibleBoard();
+                                            InitializeButtons();
+                                            flags = 0;
+                                            moves = 0;
 
-                                    // close running game
-                                    stage.close();
-                                    Solution();
-                                    Game.class.wait(5);
-                                    window.menu();
+                                            System.out.println("You Have Lost");
+                                            LanuchLostPrompt window = new LanuchLostPrompt();
+                                            // save state that you lost in a file
+                                            //===========!!!!======
+                                            // close running game
+                                            stage.close();
+                                            Solution();
+                                            window.menu();
+                                        }
+                                        else {
+                                            // something wrong
+                                            System.out.println("Something went terribly wrong, status and endgame are not in sync");
+                                        }
+                                    }
                                 }
-                                else {
-                                    // something wrong
-                                    System.out.println("Something went terribly wrong, status and endgame are not in sync");
+                                catch(Exception E){
+                                    E.printStackTrace();
                                 }
+                            }else if(button==MouseButton.SECONDARY){
+                                // here we mark a box as a mine
+                                MarkMine(x, y);
+
+                                // sync flags label with moves number
+                                Flags.setText("Flags: "+flags+"");
+                            }
+                            else{
+                                System.out.println("some other event");
                             }
                         }
-                        catch(Exception E){
-                            E.printStackTrace();
-                        }
-                    });                    
+                    });
                 }
             } 
             // grid layout
@@ -435,7 +463,8 @@ public class Game{
 
             // add all elements to root pane
             root.getChildren().add(grid);
-            root.getChildren().add(MovesLabel);
+            root.getChildren().add(Flags);
+            root.getChildren().add(Mines);
             root.getChildren().add(timesec);
 
             // if game in difficulty 1 -> load small window
@@ -531,9 +560,13 @@ public class Game{
                     btn[i][j].setPrefSize(30,30);
                 }
                 else if(getBoardValue(i, j)==-10){
+                    // -10 code for not visible
                     btn[i][j].setText("");
                     btn[i][j].setPrefSize(30,30);
-
+                }
+                else if(getBoardValue(i, j)==200){
+                    btn[i][j].setText("!");
+                    btn[i][j].setPrefSize(30, 30);
                 }
                 else{
                     btn[i][j].setText(""+getBoardValue(i, j)+"");
@@ -545,28 +578,124 @@ public class Game{
 
     // Move Method
     private static void Move(int i, int j){
-        boardvisible[i][j] = boardhidden[i][j];
         moves++;
+        
+        //for the current button
+        boardvisible[i][j] = boardhidden[i][j];
+        if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
+
+        // if you press a mine
         if (boardhidden[i][j]==-1 || boardhidden[i][j]==-2){
             endgame=true;
             status=-1;
         }
         // if you press a zero calculate which blocks should open as well
-        // if (boardhidden[i][j]==-10){
-        //     FixNeighboors(i,j);
-        // }
+        if (boardhidden[i][j]==0){
+            FixNeighboors(i,j);
+        }
+        FixVisible();
     }
 
     // Fix Neighboors (which displayed blocks should change and which not) in case of picking zero
-    private static void FixNeighboors(int i, int j){
-        
+    static void FixNeighboors(int i, int j){
+
+        try{
+            boardvisible[i][j] = 0;
+
+            if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
+
+            if(i!=0){
+                //left from current box
+                boardvisible[i-1][j] = boardhidden[i-1][j];
+                if (!btn[i-1][j].isDisable()) btn[i-1][j].setDisable(true);
+                if(boardhidden[i-1][j]==0) {
+                    boardvisible[i-1][j] = 0;
+                    //FixNeighboors(i-1,j);
+                }
+                if(j!=0){
+                    //left and down from down box
+                    boardvisible[i-1][j-1] = boardhidden[i-1][j-1];
+                    if (!btn[i-1][j-1].isDisable()) btn[i-1][j-1].setDisable(true);
+                    if(boardhidden[i-1][j-1]==0){
+                        boardvisible[i-1][j-1]=0;
+                        //FixNeighboors(i-1,j-1);
+                    } 
+
+                }
+            }
+
+            if(i!=size-1){
+                // right from current box
+                boardvisible[i+1][j] = boardhidden[i+1][j];
+                if (!btn[i+1][j].isDisable()) btn[i+1][j].setDisable(true);
+                if(boardhidden[i+1][j]==0) {
+                    boardvisible[i+1][j]=0;
+                    //FixNeighboors(i+1,j);
+                }
+                if(j!=size-1){
+                    //right and up from current box
+                    boardvisible[i+1][j+1] = boardhidden[i+1][j+1];
+                    if (!btn[i+1][j+1].isDisable()) btn[i+1][j+1].setDisable(true);
+                    if(boardhidden[i+1][j+1]==0){
+                        boardvisible[i+1][j+1] = 0;
+                        //FixNeighboors(i+1, j+1);
+                    } 
+                }
+            }
+
+            if(j!=0){
+                // down from current box
+                boardvisible[i][j-1] = boardhidden[i][j-1];
+                if (!btn[i][j-1].isDisable()) btn[i][j-1].setDisable(true);
+                if(boardhidden[i][j-1]==0) {
+                    boardvisible[i][j-1] = 0;
+                    //FixNeighboors(i,j-1);
+                }
+                if(i!=size-1){
+                    // down and right from current box
+                    boardvisible[i+1][j-1] = boardhidden[i+1][j-1];
+                    if (!btn[i+1][j-1].isDisable()) btn[i+1][j-1].setDisable(true);
+                    if(boardhidden[i+1][j-1] == 0) {
+                        boardvisible[i+1][j-1] = 0;
+                        //FixNeighboors(i+1,j-1);
+                    }
+                }
+            }
+
+            if(j!=size-1){
+                // up from current box
+                boardvisible[i][j+1] = boardhidden[i][j+1];
+                if (!btn[i][j+1].isDisable()) btn[i][j+1].setDisable(true);
+                if(boardhidden[i][j+1]==0) {
+                    boardvisible[i][j+1] = 0;
+                    //FixNeighboors(i,j+1);
+                }
+                if(i!=0){
+                    // up and left from current box
+                    boardvisible[i-1][j+1] = boardhidden[i-1][j+1];
+                    if (!btn[i-1][j+1].isDisable()) btn[i-1][j+1].setDisable(true);
+                    if(boardhidden[i-1][j+1]==0) {
+                        boardvisible[i-1][j+1] = 0;
+                        //FixNeighboors(i-1,j+1);
+                    }
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Mark Mine
+    private static void MarkMine(int i, int j){
+        flags++;
+        //for the current button
+        boardvisible[i][j] = 200;
+        if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
+        FixVisible();
     }
 
 };
-
-
-
-
 
 // EXCEPTION CLASSES
 class InvalidValueException extends Exception{

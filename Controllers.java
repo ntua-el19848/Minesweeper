@@ -64,7 +64,7 @@ public class Controllers extends App{
     void CreateGameAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
         try{
             String name = scenarioname.getText();
-            File scenario = new File("SCENARIOS/"+name+".txt");
+            File scenario = new File("medialab/"+name+".txt");
             scenario.createNewFile();
 
             FileWriter fw = new FileWriter(scenario.getAbsoluteFile());
