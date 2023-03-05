@@ -1,3 +1,13 @@
 makefile
 *.class
 *.txt
+App.class
+Controllers.class
+hs_err_pid99834.log
+.vscode/launch.json
+.vscode/extensions.json
+BOARDS/loadedboard.txt
+medialab/.DS_Store
+mines/mines.txt
+BOARDS/loadedboard.txt
+BOARDS/loadedboard.txt
