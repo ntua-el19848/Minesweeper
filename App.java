@@ -250,7 +250,7 @@ class LaunchRounds extends App{
     
     public void menu() throws Exception{
         try{
-            BufferedReader br = new BufferedReader(new FileReader("roundslog/log.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("roundslog/log"));
             List<String> lines = new LinkedList<String>();
             for(String tmp; (tmp = br.readLine()) != null;)
             if (lines.add(tmp) && lines.size() > 5){ 

@@ -763,7 +763,7 @@ public class Game{
         //lost
         // store results to log
         try{
-            FileWriter fw = new FileWriter("roundslog/log.txt", true);
+            FileWriter fw = new FileWriter("roundslog/log", true);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.newLine();
             bw.write(""+mines+" "+moves+" "+time+" Computer");
