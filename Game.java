@@ -341,13 +341,13 @@ public class Game{
                     }
                     if(i!=(size-1)){
                         if(boardhidden[i+1][j]==minecode || boardhidden[i+1][j]==superminecode) cnt++;
-                        if(j!=9){
+                        if(j!=size-1){
                             if(boardhidden[i+1][j+1]==minecode || boardhidden[i+1][j+1]==superminecode) cnt++;
                         }
                     }
                     if(j!=0){
                         if(boardhidden[i][j-1]==minecode || boardhidden[i][j-1]==superminecode) cnt++;
-                        if(i!=9){
+                        if(i!=size-1){
                             if(boardhidden[i+1][j-1]==minecode || boardhidden[i+1][j-1]==superminecode) cnt++;
                         }
                     }
