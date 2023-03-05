@@ -614,10 +614,6 @@ public class Game{
     // Move Method
     private static void Move(int i, int j){
         moves++;
-        
-        //for the current button
-        boardvisible[i][j] = boardhidden[i][j];
-        if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
 
         // if you press a mine
         if (boardhidden[i][j]==-1 || boardhidden[i][j]==-2){
@@ -625,8 +621,12 @@ public class Game{
             status=-1;
         }
         // if you press a zero calculate which blocks should open as well
-        if (boardhidden[i][j]==0){
+        else if (boardhidden[i][j]==0){
             FixNeighboors(i,j);
+        }
+        else{
+            boardvisible[i][j] = boardhidden[i][j];
+            if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
         }
         FixVisible();
     }
@@ -635,75 +635,98 @@ public class Game{
     static void FixNeighboors(int i, int j){
 
         try{
-            boardvisible[i][j] = 0;
+            if(boardvisible[i][j]!=-10){
+                //System.out.println("ivbeenhere before");
+                return;
+            }
 
+            boardvisible[i][j] = boardhidden[i][j];
             if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
 
             if(i!=0){
                 //left from current box
-                boardvisible[i-1][j] = boardhidden[i-1][j];
-                if (!btn[i-1][j].isDisable()) btn[i-1][j].setDisable(true);
                 if(boardhidden[i-1][j]==0) {
                     FixNeighboors(i-1,j);
                 }
+                else{
+                    boardvisible[i-1][j] = boardhidden[i-1][j];
+                    if (!btn[i-1][j].isDisable()) btn[i-1][j].setDisable(true);
+                }
                 if(j!=0){
                     //left and down from down box
-                    boardvisible[i-1][j-1] = boardhidden[i-1][j-1];
-                    if (!btn[i-1][j-1].isDisable()) btn[i-1][j-1].setDisable(true);
                     if(boardhidden[i-1][j-1]==0){;
                         FixNeighboors(i-1,j-1);
-                    } 
+                    }
+                    else{
+                        boardvisible[i-1][j-1] = boardhidden[i-1][j-1];
+                        if (!btn[i-1][j-1].isDisable()) btn[i-1][j-1].setDisable(true);
+                    }
 
                 }
             }
 
             if(i!=size-1){
                 // right from current box
-                boardvisible[i+1][j] = boardhidden[i+1][j];
-                if (!btn[i+1][j].isDisable()) btn[i+1][j].setDisable(true);
                 if(boardhidden[i+1][j]==0) {
                     FixNeighboors(i+1,j);
                 }
+                else{
+                    boardvisible[i+1][j] = boardhidden[i+1][j];
+                    if (!btn[i+1][j].isDisable()) btn[i+1][j].setDisable(true);
+                }
                 if(j!=size-1){
                     //right and up from current box
-                    boardvisible[i+1][j+1] = boardhidden[i+1][j+1];
-                    if (!btn[i+1][j+1].isDisable()) btn[i+1][j+1].setDisable(true);
                     if(boardhidden[i+1][j+1]==0){
                         FixNeighboors(i+1, j+1);
                     } 
+                    else{
+                        boardvisible[i+1][j+1] = boardhidden[i+1][j+1];
+                        if (!btn[i+1][j+1].isDisable()) btn[i+1][j+1].setDisable(true);
+                    }
                 }
             }
 
             if(j!=0){
                 // down from current box
-                boardvisible[i][j-1] = boardhidden[i][j-1];
-                if (!btn[i][j-1].isDisable()) btn[i][j-1].setDisable(true);
+                
                 if(boardhidden[i][j-1]==0) {
                     FixNeighboors(i,j-1);
                 }
+                else{
+                    boardvisible[i][j-1] = boardhidden[i][j-1];
+                    if (!btn[i][j-1].isDisable()) btn[i][j-1].setDisable(true);
+                }
                 if(i!=size-1){
                     // down and right from current box
-                    boardvisible[i+1][j-1] = boardhidden[i+1][j-1];
-                    if (!btn[i+1][j-1].isDisable()) btn[i+1][j-1].setDisable(true);
                     if(boardhidden[i+1][j-1] == 0) {
                         FixNeighboors(i+1,j-1);
+                    }
+                    else{
+                        boardvisible[i+1][j-1] = boardhidden[i+1][j-1];
+                        if (!btn[i+1][j-1].isDisable()) btn[i+1][j-1].setDisable(true);
                     }
                 }
             }
 
             if(j!=size-1){
                 // up from current box
-                boardvisible[i][j+1] = boardhidden[i][j+1];
-                if (!btn[i][j+1].isDisable()) btn[i][j+1].setDisable(true);
+                
                 if(boardhidden[i][j+1]==0) {
                     FixNeighboors(i,j+1);
                 }
+                else{
+                    boardvisible[i][j+1] = boardhidden[i][j+1];
+                    if (!btn[i][j+1].isDisable()) btn[i][j+1].setDisable(true);
+                }
                 if(i!=0){
                     // up and left from current box
-                    boardvisible[i-1][j+1] = boardhidden[i-1][j+1];
-                    if (!btn[i-1][j+1].isDisable()) btn[i-1][j+1].setDisable(true);
+                    
                     if(boardhidden[i-1][j+1]==0) {
                         FixNeighboors(i-1,j+1);
+                    }
+                    else{
+                        boardvisible[i-1][j+1] = boardhidden[i-1][j+1];
+                        if (!btn[i-1][j+1].isDisable()) btn[i-1][j+1].setDisable(true);
                     }
                 }
             }
