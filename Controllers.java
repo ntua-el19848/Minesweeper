@@ -151,14 +151,9 @@ public class Controllers extends App{
     }
 
     @FXML
-    void RoundsAction(ActionEvent event) {
-        
-    }
-
-    // exit between inner stages
-    @FXML
-    void ExitAction(ActionEvent event) throws Exception{
-        stage.close();
+    void RoundsAction(ActionEvent event) throws Exception{
+        LaunchRounds window = new LaunchRounds();
+        window.menu();
     }
 
     // exit from program

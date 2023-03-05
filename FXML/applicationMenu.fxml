@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,15 +12,31 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
+      <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Application">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#ApplicationAction" text="Application Menu" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateAction" text="Create Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#LoadAction" text="Load Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#StartAction" text="Start Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#MainExitAction" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Details">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#DetailAction" text="Details Menu" />
+                  <MenuItem mnemonicParsing="false" onAction="#RoundsAction" text="Rounds" />
+                  <MenuItem mnemonicParsing="false" onAction="#SolutionAction" text="Solution" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
    <Button fx:id="createButton" layoutX="147.0" layoutY="300.0" mnemonicParsing="false" onAction="#CreateAction" prefHeight="26.0" prefWidth="107.0" text="Create Game">
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
    <Button fx:id="loadButton" layoutX="147.0" layoutY="350.0" mnemonicParsing="false" onAction="#LoadAction" prefHeight="26.0" prefWidth="107.0" text="Load Game">
-         <font>
-            <Font name="MesloLGS NF Regular" size="13.0" />
-         </font></Button>
-   <Button fx:id="exitButton" layoutX="147.0" layoutY="450.0" mnemonicParsing="false" onAction="#ExitAction" prefHeight="26.0" prefWidth="107.0" text="Exit">
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
