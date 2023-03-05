@@ -223,6 +223,8 @@ public class Game{
     // It setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
     public static void setupBoard() throws Exception{ 
         InitializeHiddenBoard();
+        InitializeButtons();
+        InitializeVisibleBoard();
         //intialize board with mines
         //and write the coordinates of the mines in the mines.txt file
         //this function only randomly generates mine placement and does not fill the entire board!
@@ -292,6 +294,34 @@ public class Game{
                     System.out.print(boardhidden[i][j]);
                 }
                 System.out.print(" | ");
+            }
+            System.out.print("\n");
+        }
+    }
+
+    // Prints the visible board DEBUGGING REASONS
+    private static void printvisibleboard(){ 
+        System.out.print("\t ");
+        for(int i=0; i<size; i++){
+            System.out.print(" " + (i) + "  ");
+        }
+        System.out.print("\n");
+        for(int i=0; i<size; i++){
+            System.out.print(i + "\t| ");
+            for(int j=0; j<size; j++){
+                if(boardvisible[i][j]==0){
+                    System.out.print(" 0 ");
+                }
+                else if(boardvisible[i][j]==minecode){
+                    System.out.print(" X ");
+                }
+                else if(boardvisible[i][j]==superminecode){
+                    System.out.print(" S ");
+                }
+                else{
+                    System.out.print(boardvisible[i][j]);
+                }
+                System.out.print("  |  ");
             }
             System.out.print("\n");
         }
@@ -435,7 +465,7 @@ public class Game{
                                         }
                                         else if(status==-1){
                                             stage.close();
-                                            LostGame();
+                                            Solution();
                                         }
                                         else {
                                             // something wrong
@@ -528,6 +558,7 @@ public class Game{
                 grid.setLayoutX(50);
                 grid.setLayoutY(175);
                 root.getChildren().add(grid);
+                LostGame();
                 if(getDifficulty()==1){
                     Scene scene = new Scene(root, 400, 600);
                     stage.setScene(scene);
@@ -718,12 +749,12 @@ public class Game{
             // clear everything for new game and launch lost window
             InitializeVisibleBoard();
             InitializeButtons();
+            InitializeHiddenBoard();
             flags = 0;
             moves = 0;
             status = 0;
             endgame = false;
             LanuchLostPrompt window = new LanuchLostPrompt();
-            Solution();
             window.menu();
         }
         catch (Exception e){
