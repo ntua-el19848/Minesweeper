@@ -9,7 +9,12 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-      <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
+   <Label layoutX="51.0" layoutY="49.0" text="Minesweeper Game Solution">
+      <font>
+         <Font name="MesloLGS NF Bold" size="20.0" />
+      </font>
+   </Label>
+      <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
          <menus>
             <Menu mnemonicParsing="false" text="Application">
                <items>
@@ -27,11 +32,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#SolutionAction" text="Solution" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="About">
+               <items>
+                  <Menu mnemonicParsing="false" onAction="#RulesAction" text="Rules" />
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
-   <Label layoutX="51.0" layoutY="49.0" text="Minesweeper Game Solution">
-      <font>
-         <Font name="MesloLGS NF Bold" size="20.0" />
-      </font>
-   </Label>
 </children></AnchorPane>

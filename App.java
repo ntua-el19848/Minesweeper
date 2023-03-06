@@ -208,6 +208,28 @@ class LaunchDetails extends App{
     public static void close(){
         stage.close();
     }
+};
+
+// Class that loads the details window
+class LaunchRules extends App{
+    
+    public void menu() throws Exception{
+        try{
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/rulesMenu.fxml"));
+            Scene scene = new Scene(root, 400, 600);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void close(){
+        stage.close();
+    }
 };  
 
 // Class that loads when you have lost a game

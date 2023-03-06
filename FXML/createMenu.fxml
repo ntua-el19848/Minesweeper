@@ -11,32 +11,12 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
 <children>
-      <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
-         <menus>
-            <Menu mnemonicParsing="false" text="Application">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#ApplicationAction" text="Application Menu" />
-                  <MenuItem mnemonicParsing="false" onAction="#CreateAction" text="Create Game" />
-                  <MenuItem mnemonicParsing="false" onAction="#LoadAction" text="Load Game" />
-                  <MenuItem mnemonicParsing="false" onAction="#StartAction" text="Start Game" />
-                  <MenuItem mnemonicParsing="false" onAction="#MainExitAction" text="Exit" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Details">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#DetailAction" text="Details Menu" />
-                  <MenuItem mnemonicParsing="false" onAction="#RoundsAction" text="Rounds" />
-                  <MenuItem mnemonicParsing="false" onAction="#SolutionAction" text="Solution" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
    <Label layoutX="62.0" layoutY="81.0" text="Create Minesweeper Game">
       <font>
          <Font name="MesloLGS NF Bold" size="20.0" />
       </font>
    </Label>
-      <Button fx:id="creategameButton" layoutX="143.0" layoutY="404.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="116.0" text="Create Game">
+      <Button fx:id="creategameButton" layoutX="143.0" layoutY="441.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="116.0" text="Create Game">
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
@@ -57,20 +37,11 @@
          </font>
       </Label>
       <TextField fx:id="time" layoutX="189.0" layoutY="270.0" prefHeight="26.0" prefWidth="170.0" />
-      <Label layoutX="38.0" layoutY="315.0" text="Supermine">
-         <font>
-            <Font name="MesloLGS NF Regular" size="14.0" />
-         </font>
-      </Label>
       <TextField fx:id="difficulty" layoutX="189.0" layoutY="190.0" prefHeight="26.0" prefWidth="170.0" promptText="1: easy, 2: hard">
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font></TextField>
-      <TextField fx:id="supermine" layoutX="189.0" layoutY="310.0" prefHeight="26.0" prefWidth="170.0" promptText="0: no, 1: yes">
-         <font>
-            <Font name="MesloLGS NF Regular" size="13.0" />
-         </font></TextField>
-      <Button fx:id="applicationButton" layoutX="143.0" layoutY="460.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="116.0" text="Back">
+      <Button fx:id="applicationButton" layoutX="143.0" layoutY="498.0" mnemonicParsing="false" onAction="#ApplicationAction" prefHeight="34.0" prefWidth="116.0" text="Back">
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
@@ -84,4 +55,34 @@
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font>
       </TextField>
+      <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Application">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#ApplicationAction" text="Application Menu" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateAction" text="Create Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#LoadAction" text="Load Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#StartAction" text="Start Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#MainExitAction" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Details">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#DetailAction" text="Details Menu" />
+                  <MenuItem mnemonicParsing="false" onAction="#RoundsAction" text="Rounds" />
+                  <MenuItem mnemonicParsing="false" onAction="#SolutionAction" text="Solution" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+               <items>
+                  <Menu mnemonicParsing="false" onAction="#RulesAction" text="Rules" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Label layoutX="42.0" layoutY="335.0" prefHeight="58.0" prefWidth="318.0" text="Instructions about creating a valid game are in About-&gt;Rules." textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font name="MesloLGS NF Regular" size="14.0" />
+         </font>
+      </Label>
 </children></AnchorPane>

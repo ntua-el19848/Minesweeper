@@ -29,8 +29,6 @@ public class Controllers extends App{
     @FXML
     private TextField scenarioname;
     @FXML
-    private TextField supermine;
-    @FXML
     private TextField difficulty;
     @FXML
     private Button loadgameButton;
@@ -73,7 +71,17 @@ public class Controllers extends App{
             String dif = difficulty.getText();
             String mn = mines.getText();
             String t = time.getText();
-            String smn = supermine.getText();
+            String smn;
+
+            if(dif.equals("1")){
+                smn="0";
+            }   
+            else if(dif.equals("2")){
+                smn="1";
+            }
+            else{
+                smn="-1";
+            }
 
             bw.write(dif);
             bw.write("\n");
@@ -147,6 +155,12 @@ public class Controllers extends App{
     @FXML
     void RoundsAction(ActionEvent event) throws Exception{
         LaunchRounds window = new LaunchRounds();
+        window.menu();
+    }
+
+    @FXML
+    void RulesAction(ActionEvent event) throws Exception{
+        LaunchRules window = new LaunchRules();
         window.menu();
     }
 
