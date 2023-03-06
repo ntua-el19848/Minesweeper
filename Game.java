@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -42,6 +44,7 @@ public class Game{
     */
 
     //initialize the input with -1 so that i know that if some of these values remain -1 --> InvalidDescriptionException
+    static Stage stage = new Stage();
     static private String scenario;
     static private int difficulty;
     static private int mines;
@@ -56,11 +59,14 @@ public class Game{
     static final int superminecode=-2;
     static final int nondisplayedcode=-10;
     static final int flagedcode=200;
+    static final int visibleminecode=-5;
+    static final int visiblesuperminecode=-6;
     static private boolean scenario_validity = false;
     static private Button btn[][] = new Button[size][size];
     static private int moves=0;
     static private int flags=0;
     static private int time_remaining;
+    static private int nonvisiblemines;
 
     /*  Encoding that I use for the boards
      *  FOR THE HIDDEN BOARD
@@ -183,6 +189,7 @@ public class Game{
             // Invalid Description Exception Check!
             if(scan.hasNext()) setDifficulty(scan.nextInt());
             if(scan.hasNext()) setMines(scan.nextInt());
+            nonvisiblemines=mines;
             if(scan.hasNext()) setTime(scan.nextInt());
             if(scan.hasNext()) setSupermine(scan.nextInt());
             scan.close();
@@ -400,7 +407,7 @@ public class Game{
     private static boolean endGameMove(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                if (boardvisible[i][j]==minecode || boardvisible[i][j]==-2){
+                if (boardvisible[i][j]==minecode || boardvisible[i][j]==superminecode){
                     status = -1;
                     return true;
                 }
@@ -415,7 +422,7 @@ public class Game{
             }
         }
         // System.out.println(cnt);
-        if (cnt==mines){
+        if (cnt==nonvisiblemines){
             status = 1;
             return true;
         }
@@ -428,7 +435,6 @@ public class Game{
             // initialize root Pane 
             Pane root = new Pane();
             // initialize stage
-            Stage stage = new Stage();
             root = FXMLLoader.load(Game.class.getResource("FXML/board.fxml"));
             stage.setTitle("Minesweeper Game");
 
@@ -531,7 +537,7 @@ public class Game{
             }
 
             // grid layout
-            grid.setLayoutX(51);
+            grid.setLayoutX(30);
             grid.setLayoutY(160);
 
             // add all elements to root pane
@@ -542,13 +548,13 @@ public class Game{
 
             // if game in difficulty 1 -> load small window
             if(getDifficulty()==1){
-                Scene scene = new Scene(root, 400, 600);
+                Scene scene = new Scene(root, 420, 600);
                 stage.setScene(scene);
                 stage.show();
             }
             // if game in difficulty 2 -> load large window
             else{
-                Scene scene = new Scene(root, 600, 800);
+                Scene scene = new Scene(root, 700, 900);
                 stage.setScene(scene);
                 stage.show();
             }
@@ -578,25 +584,30 @@ public class Game{
             }
 
             Pane root = new Pane();
-            Stage stage = new Stage();
             root = FXMLLoader.load(Game.class.getResource("FXML/solution.fxml"));
             stage.setTitle("Minesweeper Game");
 
             Button[][] sol = new Button[size][size];
-
+            Image mine = new Image(Game.class.getResourceAsStream("images/mine.jpg"));
+            Image supermine = new Image(Game.class.getResourceAsStream("images/supermine.jpg"));
             for(int i=0; i<size; i++){
                 for(int j=0; j<size; j++){   
                     if(getHiddenBoardValue(i,j)==minecode){
-                        sol[i][j] = new Button("X");
-                        sol[i][j].setPrefSize(30,30);
+                        sol[i][j] = new Button();
+                        sol[i][j].setPrefSize(40,40);
+                        sol[i][j].setGraphic(new ImageView(mine));
+                        sol[i][j].setDisable(true);
                     }
-                    else if(getHiddenBoardValue(i,j)==-2){
-                        sol[i][j] = new Button("S");
-                        sol[i][j].setPrefSize(30,30);
+                    else if(getHiddenBoardValue(i,j)==superminecode){
+                        sol[i][j] = new Button();
+                        sol[i][j].setPrefSize(40,40);
+                        sol[i][j].setGraphic(new ImageView(supermine));
+                        sol[i][j].setDisable(true);
                     }
                     else{
                         sol[i][j] = new Button(""+getHiddenBoardValue(i,j)+"");
-                        sol[i][j].setPrefSize(30,30);
+                        sol[i][j].setPrefSize(40,40);
+                        sol[i][j].setDisable(true);
                     }
                 }
             }
@@ -608,17 +619,17 @@ public class Game{
                 }
             }
 
-            grid.setLayoutX(50);
-            grid.setLayoutY(175);
+            grid.setLayoutX(30);
+            grid.setLayoutY(160);
             root.getChildren().add(grid);
             LostGame();
             if(getDifficulty()==1){
-                Scene scene = new Scene(root, 400, 600);
+                Scene scene = new Scene(root, 420, 600);
                 stage.setScene(scene);
                 stage.show();
             }
             else{
-                Scene scene = new Scene(root, 600, 800);
+                Scene scene = new Scene(root, 700, 900);
                 stage.setScene(scene);
                 stage.show();
             }
@@ -634,28 +645,38 @@ public class Game{
     private static void FixVisible(){
         // initialize buttons
         // for every button put the right value 
+        Image mine = new Image(Game.class.getResourceAsStream("images/mine.jpg"));
+        Image supermine = new Image(Game.class.getResourceAsStream("images/supermine.jpg"));
+        Image flag = new Image(Game.class.getResourceAsStream("images/flag.jpg"));
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                if(getBoardValue(i,j)==minecode){
-                    btn[i][j].setText("X");
-                    btn[i][j].setPrefSize(30,30);
+                if(getBoardValue(i,j)==minecode || getBoardValue(i, j)==visibleminecode){
+                    btn[i][j].setPrefSize(40,40);
+                    btn[i][j].setGraphic(new ImageView(mine));
+                    if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
                 }
-                else if(getBoardValue(i,j)==superminecode){
-                    btn[i][j].setText("S");
-                    btn[i][j].setPrefSize(30,30);
+                else if(getBoardValue(i,j)==superminecode || getBoardValue(i, j)==visiblesuperminecode){
+                    btn[i][j].setPrefSize(40,40);
+                    btn[i][j].setGraphic(new ImageView(supermine));
+                    if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
                 }
-                else if(getBoardValue(i, j)==nondisplayedcode || getBoardValue(i, j)==0){
-                    // -10 code for not visible
-                    btn[i][j].setText("");
-                    btn[i][j].setPrefSize(30,30);
+                else if(getBoardValue(i, j)==0){
+                    btn[i][j].setGraphic(new ImageView());
+                    btn[i][j].setPrefSize(40,40);
+                    if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
+                }
+                else if(getBoardValue(i, j)==nondisplayedcode){
+                    btn[i][j].setGraphic(new ImageView());
+                    btn[i][j].setPrefSize(40,40);
                 }
                 else if(getBoardValue(i, j)==flagedcode){
-                    btn[i][j].setText("F");
-                    btn[i][j].setPrefSize(30, 30);
+                    btn[i][j].setPrefSize(40, 40);
+                    btn[i][j].setGraphic(new ImageView(flag));
                 }
                 else{
                     btn[i][j].setText(""+getBoardValue(i, j)+"");
-                    btn[i][j].setPrefSize(30,30);
+                    btn[i][j].setPrefSize(40,40);
+                    if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
                 }
             }
         }
@@ -671,7 +692,6 @@ public class Game{
         }
         else{
             boardvisible[i][j] = boardhidden[i][j];
-            if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
         }
         FixVisible();
     }
@@ -681,12 +701,10 @@ public class Game{
 
         try{
             if(boardvisible[i][j]!=nondisplayedcode){
-                //System.out.println("ivbeenhere before");
                 return;
             }
 
             boardvisible[i][j] = boardhidden[i][j];
-            if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
 
             if(i!=0){
                 //left from current box
@@ -695,7 +713,6 @@ public class Game{
                 }
                 else{
                     boardvisible[i-1][j] = boardhidden[i-1][j];
-                    if (!btn[i-1][j].isDisable()) btn[i-1][j].setDisable(true);
                 }
                 if(j!=0){
                     //left and down from down box
@@ -704,7 +721,6 @@ public class Game{
                     }
                     else{
                         boardvisible[i-1][j-1] = boardhidden[i-1][j-1];
-                        if (!btn[i-1][j-1].isDisable()) btn[i-1][j-1].setDisable(true);
                     }
 
                 }
@@ -717,7 +733,6 @@ public class Game{
                 }
                 else{
                     boardvisible[i+1][j] = boardhidden[i+1][j];
-                    if (!btn[i+1][j].isDisable()) btn[i+1][j].setDisable(true);
                 }
                 if(j!=size-1){
                     //right and up from current box
@@ -726,7 +741,6 @@ public class Game{
                     } 
                     else{
                         boardvisible[i+1][j+1] = boardhidden[i+1][j+1];
-                        if (!btn[i+1][j+1].isDisable()) btn[i+1][j+1].setDisable(true);
                     }
                 }
             }
@@ -739,7 +753,6 @@ public class Game{
                 }
                 else{
                     boardvisible[i][j-1] = boardhidden[i][j-1];
-                    if (!btn[i][j-1].isDisable()) btn[i][j-1].setDisable(true);
                 }
                 if(i!=size-1){
                     // down and right from current box
@@ -748,7 +761,6 @@ public class Game{
                     }
                     else{
                         boardvisible[i+1][j-1] = boardhidden[i+1][j-1];
-                        if (!btn[i+1][j-1].isDisable()) btn[i+1][j-1].setDisable(true);
                     }
                 }
             }
@@ -761,7 +773,6 @@ public class Game{
                 }
                 else{
                     boardvisible[i][j+1] = boardhidden[i][j+1];
-                    if (!btn[i][j+1].isDisable()) btn[i][j+1].setDisable(true);
                 }
                 if(i!=0){
                     // up and left from current box
@@ -771,7 +782,6 @@ public class Game{
                     }
                     else{
                         boardvisible[i-1][j+1] = boardhidden[i-1][j+1];
-                        if (!btn[i-1][j+1].isDisable()) btn[i-1][j+1].setDisable(true);
                     }
                 }
             }
@@ -793,8 +803,34 @@ public class Game{
         else{
             if (flags<mines){
                 flags++;
-                //for the current button
-                boardvisible[i][j] = flagedcode;
+                // if you flag a supermine
+                if(boardhidden[i][j]==superminecode){
+                    for(int a=0; a<size; a++){
+                        boardvisible[i][a]=boardhidden[i][a];
+                        boardvisible[a][j]=boardhidden[a][j];
+                        if (!btn[i][a].isDisable()) btn[i][a].setDisable(true);
+                        if (!btn[a][j].isDisable()) btn[a][j].setDisable(true);
+                        
+                        if(boardhidden[i][a]==minecode){
+                            boardvisible[i][a]=visibleminecode;
+                            nonvisiblemines--;
+                        }
+                        if(boardhidden[a][j]==minecode){
+                            boardvisible[a][j]=visibleminecode;
+                            nonvisiblemines--;
+                        }
+
+                    }
+                    boardvisible[i][j]=visiblesuperminecode;
+                    //because it passes two times from supermine
+                    nonvisiblemines++;
+                }
+                // if you dont mark a supermine
+                else{
+                    //for the current button
+                    boardvisible[i][j] = flagedcode;
+                }
+                
             }
             else{
                 System.out.println("Cant flag more boxes than the number of mines");

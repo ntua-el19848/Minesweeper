@@ -40,7 +40,7 @@
             <Image url="@mine.png" />
          </image>
       </ImageView>
-      <MenuBar layoutX="2.0" layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
+      <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="400.0">
          <menus>
             <Menu mnemonicParsing="false" text="Application">
                <items>
@@ -56,6 +56,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#DetailAction" text="Details Menu" />
                   <MenuItem mnemonicParsing="false" onAction="#RoundsAction" text="Rounds" />
                   <MenuItem mnemonicParsing="false" onAction="#SolutionAction" text="Solution" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+               <items>
+                  <Menu mnemonicParsing="false" onAction="#RulesAction" text="Rules" />
                </items>
             </Menu>
          </menus>
