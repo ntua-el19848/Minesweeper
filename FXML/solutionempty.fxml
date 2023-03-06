@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers">
+   <children>
+      <Label layoutX="45.0" layoutY="24.0" prefHeight="23.0" prefWidth="212.0" text="Solution Not Found">
+         <font>
+            <Font name="MesloLGS NF Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="53.0" prefHeight="77.0" prefWidth="219.0" text="You have not started a game yet, to see the solution! Please start a game and try again" textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font name="MesloLGS NF Regular" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

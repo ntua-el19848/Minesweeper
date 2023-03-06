@@ -141,13 +141,7 @@ public class Controllers extends App{
     // Solution button
     @FXML
     void SolutionAction(ActionEvent event) throws Exception {
-        if(Game.getScenarioValidity()){
-            Game.Solution();
-        }
-        else{
-            LanuchInvalidGameException window = new LanuchInvalidGameException();
-            window.menu();
-        }
+        Game.Solution();
     }
 
     @FXML
