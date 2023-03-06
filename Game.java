@@ -4,9 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.Random;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -55,6 +58,7 @@ public class Game{
     static private Button btn[][] = new Button[size][size];
     static private int moves=0;
     static private int flags=0;
+    static private int time_remaining;
 
     /*  Encoding that I use for the boards
      *  FOR THE HIDDEN BOARD
@@ -391,11 +395,7 @@ public class Game{
     }
 
     // Condition that checks whether the game has ended or not
-    private static boolean endGame(){
-        if(getTime()<=0){
-            status = -1;
-            return true;
-        }
+    private static boolean endGameMove(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
                 if (boardvisible[i][j]==-1 || boardvisible[i][j]==-2){
@@ -431,10 +431,26 @@ public class Game{
             stage.setTitle("Minesweeper Game");
 
             // label for time
-            Label timesec = new Label("Time: "+getTime()+"");
+            time_remaining=time;
+            Label timesec = new Label("Time: "+time+"");
             timesec.setLayoutX(50);
             timesec.setLayoutY(115);
             timesec.setFont(new Font("MesloLGS NF Bold", 16));
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                time_remaining--;
+                timesec.setText("Time: "+time_remaining+"");
+                if(time_remaining==0){
+                    stage.close();
+                    try {
+                        Solution();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
 
             // initialize the visible board buttons to be in sync with boardvisible array
             FixVisible();
@@ -475,7 +491,7 @@ public class Game{
                                 try{
                                     // register and handle the move via Move method (fix neighboors etc)
                                     Move(x,y);
-                                    endgame = endGame();
+                                    endgame = endGameMove();
                                     // in case of ending game
                                     if (endgame){
                                         if(status==1){
@@ -510,7 +526,8 @@ public class Game{
                         }
                     });
                 }
-            } 
+            }
+
             // grid layout
             grid.setLayoutX(51);
             grid.setLayoutY(160);
