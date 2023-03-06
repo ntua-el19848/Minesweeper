@@ -50,7 +50,7 @@ public class Game{
     static private int [][] boardvisible = new int[size][size];
     static private int [][] boardhidden = new int[size][size];
     static final int minecode=-1;
-    static final int superminecode=-200;
+    static final int superminecode=-2;
     static private boolean scenario_validity = false;
     static private Button btn[][] = new Button[size][size];
     static private int moves=0;
@@ -236,33 +236,67 @@ public class Game{
         
         int var=0;
         // to not have two mines randomly placed in same place
-        //int random_placements[getMines()];
-
+        int[] x = new int[mines];
+        int[] y = new int[mines];
+        
         while(var!=getMines()-1) {
             Random random = new Random();
             int i = random.nextInt(size-1);
             int j = random.nextInt(size-1);
+
+            // to not have two mines randomly placed in same place
+            boolean same = false;
+            for(int k=0; k<var; k++){
+                if(x[k]==i && y[k]==j) same = true;
+            }
+            if (same) continue;
+            
+            // if not same
             boardhidden[i][j] = minecode;
             bw.write(""+i+", "+j+", 0");
             bw.write("\n");
+            x[var] = i;
+            y[var] = j;
             var++;
         }
 
-        if (supermine==1){
-            Random random = new Random();
-            int i = random.nextInt(size-1);
-            int j = random.nextInt(size-1);
-            boardhidden[i][j] = superminecode;
-            bw.write(""+i+", "+j+", 1");
-            var++;
-        }
-        else{
-            Random random = new Random();
-            int i = random.nextInt(size-1);
-            int j = random.nextInt(size-1);
-            boardhidden[i][j] = minecode;
-            bw.write(""+i+", "+j+", 0");
-            var++;
+        while(true){
+            if (supermine==1){
+                Random random = new Random();
+                int i = random.nextInt(size-1);
+                int j = random.nextInt(size-1);
+
+                // to not have two mines randomly placed in same place
+                boolean same = false;
+                for(int k=0; k<var; k++){
+                    if(x[k]==i && y[k]==j) same = true;
+                }
+                if (same) continue;
+                
+                // if not same
+                boardhidden[i][j] = superminecode;
+                bw.write(""+i+", "+j+", 1");
+                var++;
+                break;
+            }
+            else{
+                Random random = new Random();
+                int i = random.nextInt(size-1);
+                int j = random.nextInt(size-1);
+
+                // to not have two mines randomly placed in same place
+                boolean same = false;
+                for(int k=0; k<var; k++){
+                    if(x[k]==i && y[k]==j) same = true;
+                }
+                if (same) continue;
+                
+                // if not same
+                boardhidden[i][j] = minecode;
+                bw.write(""+i+", "+j+", 0");
+                var++;
+                break;
+            }
         }
 
         bw.close();
@@ -294,34 +328,6 @@ public class Game{
                     System.out.print(boardhidden[i][j]);
                 }
                 System.out.print(" | ");
-            }
-            System.out.print("\n");
-        }
-    }
-
-    // Prints the visible board DEBUGGING REASONS
-    private static void printvisibleboard(){ 
-        System.out.print("\t ");
-        for(int i=0; i<size; i++){
-            System.out.print(" " + (i) + "  ");
-        }
-        System.out.print("\n");
-        for(int i=0; i<size; i++){
-            System.out.print(i + "\t| ");
-            for(int j=0; j<size; j++){
-                if(boardvisible[i][j]==0){
-                    System.out.print(" 0 ");
-                }
-                else if(boardvisible[i][j]==minecode){
-                    System.out.print(" X ");
-                }
-                else if(boardvisible[i][j]==superminecode){
-                    System.out.print(" S ");
-                }
-                else{
-                    System.out.print(boardvisible[i][j]);
-                }
-                System.out.print("  |  ");
             }
             System.out.print("\n");
         }
@@ -385,20 +391,33 @@ public class Game{
     }
 
     // Condition that checks whether the game has ended or not
-    private static boolean endGameMove(){
-        if(getTime()==0){
+    private static boolean endGame(){
+        if(getTime()<=0){
+            status = -1;
             return true;
         }
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                if(boardvisible[i][j]==-10){
-                    if(boardhidden[i][j]!=minecode){
-                        return false;
-                    }
+                if (boardvisible[i][j]==-1 || boardvisible[i][j]==-2){
+                    status = -1;
+                    return true;
                 }
+
             }
         }
-        return true;
+
+        int cnt = 0;
+        for(int i=0; i<size; i++){
+            for(int j=0; j<size; j++){
+                if (boardvisible[i][j]==-10) cnt++;
+            }
+        }
+        // System.out.println(cnt);
+        if (cnt==mines){
+            status = 1;
+            return true;
+        }
+        return false;
     }
 
     // method that runs when game is being started
@@ -456,12 +475,13 @@ public class Game{
                                 try{
                                     // register and handle the move via Move method (fix neighboors etc)
                                     Move(x,y);
-
+                                    endgame = endGame();
                                     // in case of ending game
                                     if (endgame){
                                         if(status==1){
                                             //won
-        
+                                            stage.close();
+                                            WonGame();
                                         }
                                         else if(status==-1){
                                             stage.close();
@@ -586,11 +606,11 @@ public class Game{
         // for every button put the right value 
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                if(getBoardValue(i,j)==-1){
+                if(getBoardValue(i,j)==minecode){
                     btn[i][j].setText("X");
                     btn[i][j].setPrefSize(30,30);
                 }
-                else if(getBoardValue(i,j)==-2){
+                else if(getBoardValue(i,j)==superminecode){
                     btn[i][j].setText("S");
                     btn[i][j].setPrefSize(30,30);
                 }
@@ -615,13 +635,8 @@ public class Game{
     private static void Move(int i, int j){
         moves++;
 
-        // if you press a mine
-        if (boardhidden[i][j]==-1 || boardhidden[i][j]==-2){
-            endgame=true;
-            status=-1;
-        }
         // if you press a zero calculate which blocks should open as well
-        else if (boardhidden[i][j]==0){
+        if (boardhidden[i][j]==0){
             FixNeighboors(i,j);
         }
         else{
@@ -778,6 +793,33 @@ public class Game{
             status = 0;
             endgame = false;
             LanuchLostPrompt window = new LanuchLostPrompt();
+            window.menu();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    // Lost Game
+    private static void WonGame(){
+        //lost
+        // store results to log
+        try{
+            FileWriter fw = new FileWriter("roundslog/log", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.newLine();
+            bw.write(""+mines+" "+moves+" "+time+" Human");
+            bw.close();
+
+            // clear everything for new game and launch lost window
+            InitializeVisibleBoard();
+            InitializeButtons();
+            InitializeHiddenBoard();
+            flags = 0;
+            moves = 0;
+            status = 0;
+            endgame = false;
+            LanuchWonPrompt window = new LanuchWonPrompt();
             window.menu();
         }
         catch (Exception e){

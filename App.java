@@ -228,6 +228,24 @@ class LanuchLostPrompt extends App{
     }
 };
 
+// Class that loads when you have lost a game
+class LanuchWonPrompt extends App{
+    
+    public void menu() throws Exception{
+        try{
+            Pane root;
+            root = FXMLLoader.load(getClass().getResource("FXML/won.fxml"));
+            Scene scene = new Scene(root, 300, 150);
+            stage.setTitle("Minesweeper Medialab");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+};
+
 // Class that loads the exception window when trying to start an invalid game (or not loaded game)
 class LanuchInvalidGameException extends App{
     
