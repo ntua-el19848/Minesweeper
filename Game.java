@@ -20,6 +20,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
+/*
+ * BEFORE EVERY PUBLIC METHOD OF THIS 
+ * CLASS THERE IS DOUMENTATION
+ * javadoc[3]
+ */
+
+
 
 // This Class is the game class that manages the initialization, creation, flow of the game
 public class Game extends App{
@@ -42,8 +49,6 @@ public class Game extends App{
     - MarkMine
     */
 
-    //initialize the input with -1 so that i know that if some of these values remain -1 --> InvalidDescriptionException
-    static private String scenario;
     static private int difficulty;
     static private int mines;
     static private boolean endgame;
@@ -71,7 +76,6 @@ public class Game extends App{
      *  FOR THE HIDDEN BOARD
      *  minecode --> integer that i have assigned (non used) to know if its a mine = -1
      *  superminecode --> integer that i have assigned (non used) to know if its a mine == -2
-     *
      *  FOR THE VISIBLE BOARD
      *  CODE 200 --> marked as mine
      *  CODE -10 --> hidden
@@ -79,34 +83,36 @@ public class Game extends App{
      */
 
     // Setters
+    
+
+
+    /*
+     * 
+     */
     public static void ExitGame(){
         exitgamepressed=true;
     }
 
-    public static void setDifficulty(int x){
+    private static void setDifficulty(int x){
         difficulty = x;
         // initilize size and board based on difficulty
         if(x==1) size=9;
         if(x==2) size=16;
     }
 
-    public static void setMines(int x){
+    private static void setMines(int x){
         mines = x;
     }
 
-    public static void setSupermine(int x){
+    private static void setSupermine(int x){
         supermine = x;
     }
 
-    public static void setTime(int x){
+    private static void setTime(int x){
         time = x;
     }
 
-    public static void setScenario(String x){
-        scenario = x;
-    }
-
-    public static void setScenarioValidity(boolean x){
+    private static void setScenarioValidity(boolean x){
         scenario_validity = x;
     }
 
@@ -137,41 +143,43 @@ public class Game extends App{
         }
     }
     // Getters
-    public static int getDifficulty(){
+    private static int getDifficulty(){
         return difficulty;
     }
 
-    public static int getMines(){
+    private static int getMines(){
         return mines;
     }
 
-    public static int getSupermine(){
+    private static int getSupermine(){
         return supermine;
     }
 
-    public static int getTime(){
+    private static int getTime(){
         return time;
     }
 
-    public static String getScenario(){
-        return scenario;
-    }
-
+    /*
+     * 
+     */
     public static boolean getScenarioValidity(){
         return scenario_validity;
     }
 
-    public static int getBoardValue(int i, int j){
+    private static int getBoardValue(int i, int j){
         return boardvisible[i][j];
     }
 
-    public static int getHiddenBoardValue(int i, int j){
+    private static int getHiddenBoardValue(int i, int j){
         return boardhidden[i][j];
     }
 
     // Other Methods
 
     // Initializes the variables from input and checks for the right values.
+    /*
+     * 
+     */
     public static void ValidationCheck(String scenario) throws Exception { 
         try{
             File input = new File("medialab/"+scenario+".txt");
@@ -237,6 +245,9 @@ public class Game extends App{
     }
 
     // It setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
+    /*
+     * 
+     */
     public static void setupBoard() throws Exception{ 
         InitializeHiddenBoard();
         InitializeButtons();
@@ -421,10 +432,9 @@ public class Game extends App{
         int cnt = 0;
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                if (boardvisible[i][j]==nondisplayedcode) cnt++;
+                if (boardvisible[i][j]==nondisplayedcode || boardvisible[i][j]==flagedcode) cnt++;
             }
         }
-        // System.out.println(cnt);
         if (cnt==nonvisiblemines){
             status = 1;
             return true;
@@ -433,6 +443,9 @@ public class Game extends App{
     }
 
     // method that runs when game is being started
+    /*
+     * 
+     */
     public static void StartGame() throws Exception{
         try{
             exitgamepressed = false;
@@ -625,6 +638,9 @@ public class Game extends App{
     }
 
     // method called to retrieve solution
+    /*
+     * 
+     */
     public static void Solution() throws Exception{
         // the game has to be played once to show solution
         try{
@@ -682,16 +698,17 @@ public class Game extends App{
             grid.setLayoutX(30);
             grid.setLayoutY(160);
             root.getChildren().add(grid);
-            LostGame();
             if(getDifficulty()==1){
                 Scene scene = new Scene(root, 420, 600);
                 stage.setScene(scene);
                 stage.show();
+                LostGame();
             }
             else{
                 Scene scene = new Scene(root, 700, 900);
                 stage.setScene(scene);
                 stage.show();
+                LostGame();
             }
 
         
