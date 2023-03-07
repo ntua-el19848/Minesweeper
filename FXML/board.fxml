@@ -18,23 +18,23 @@
          <menus>
             <Menu mnemonicParsing="false" text="Application">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#ApplicationAction" text="Application Menu" />
-                  <MenuItem mnemonicParsing="false" onAction="#CreateAction" text="Create Game" />
-                  <MenuItem mnemonicParsing="false" onAction="#LoadAction" text="Load Game" />
-                  <MenuItem mnemonicParsing="false" onAction="#StartAction" text="Start Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#ApplicationActionFromGame" text="Application Menu" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateActionFromGame" text="Create Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#LoadActionFromGame" text="Load Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#StartActionFromGame" text="Start Game" />
                   <MenuItem mnemonicParsing="false" onAction="#MainExitAction" text="Exit" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Details">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#DetailAction" text="Details Menu" />
-                  <MenuItem mnemonicParsing="false" onAction="#RoundsAction" text="Rounds" />
-                  <MenuItem mnemonicParsing="false" onAction="#SolutionAction" text="Solution" />
+                  <MenuItem mnemonicParsing="false" onAction="#DetailActionFromGame" text="Details Menu" />
+                  <MenuItem mnemonicParsing="false" onAction="#RoundsActionFromGame" text="Rounds" />
+                  <MenuItem mnemonicParsing="false" onAction="#SolutionActionFromGame" text="Solution" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="About">
                <items>
-                  <Menu mnemonicParsing="false" onAction="#RulesAction" text="Rules" />
+                  <Menu mnemonicParsing="false" onAction="#RulesActionFromGame" text="Rules" />
                </items>
             </Menu>
          </menus>

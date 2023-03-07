@@ -161,4 +161,69 @@ public class Controllers extends App{
     void MainExitAction(ActionEvent event) throws Exception{ 
         System.exit(0);
     }
+
+
+
+
+    // FROM GAME MENU BAR
+    // Details menu button
+    @FXML
+    void DetailActionFromGame(ActionEvent event) throws Exception {
+        Game.ExitGame();
+        LaunchDetails window = new LaunchDetails();
+        window.menu();
+    }
+
+    // Solution button
+    @FXML
+    void SolutionActionFromGame(ActionEvent event) throws Exception {
+        Game.ExitGame();
+        Game.Solution();
+    }
+
+    @FXML
+    void RoundsActionFromGame(ActionEvent event) throws Exception{
+        Game.ExitGame();
+        LaunchRounds window = new LaunchRounds();
+        window.menu();
+    }
+
+    @FXML
+    void RulesActionFromGame(ActionEvent event) throws Exception{
+        Game.ExitGame();
+        LaunchRules window = new LaunchRules();
+        window.menu();
+    }
+
+    //application menu button
+    @FXML
+    void ApplicationActionFromGame(ActionEvent event) throws Exception{//DONE (IT WORKS)
+        Game.ExitGame();
+        stage.close();
+        LaunchApplication window = new LaunchApplication();
+        window.menu();
+    }
+
+    // create menu button
+    @FXML
+    void CreateActionFromGame(ActionEvent event) throws Exception{//DONE (IT WORKS)
+        Game.ExitGame();
+        LaunchCreate window = new LaunchCreate();
+        window.menu();
+    }
+            // Load menu button
+    @FXML
+    void LoadActionFromGame(ActionEvent event) throws Exception{//DONE (IT WORKS)
+        Game.ExitGame();
+        LaunchLoad window = new LaunchLoad();
+        window.menu();
+    }
+    // Start menu button
+    @FXML
+    void StartActionFromGame(ActionEvent event) throws Exception{//DONE (IT WORKS)
+        Game.ExitGame();
+        LaunchStart window = new LaunchStart();
+        window.menu();
+    }
+
 };

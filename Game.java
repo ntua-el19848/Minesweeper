@@ -65,6 +65,7 @@ public class Game extends App{
     static private int flags=0;
     static private int time_remaining;
     static private int nonvisiblemines;
+    static private boolean exitgamepressed=false;
 
     /*  Encoding that I use for the boards
      *  FOR THE HIDDEN BOARD
@@ -78,6 +79,10 @@ public class Game extends App{
      */
 
     // Setters
+    public static void ExitGame(){
+        exitgamepressed=true;
+    }
+
     public static void setDifficulty(int x){
         difficulty = x;
         // initilize size and board based on difficulty
@@ -430,6 +435,8 @@ public class Game extends App{
     // method that runs when game is being started
     public static void StartGame() throws Exception{
         try{
+            exitgamepressed = false;
+
             // initialize root Pane 
             Pane root = new Pane();
             // initialize stage
@@ -444,14 +451,16 @@ public class Game extends App{
             timesec.setFont(new Font("MesloLGS NF Bold", 16));
 
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-                time_remaining--;
-                timesec.setText("Time: "+time_remaining+"");
-                if(time_remaining==0){
-                    stage.close();
-                    try {
-                        Solution();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                if(!exitgamepressed){
+                    time_remaining--;
+                    timesec.setText("Time: "+time_remaining+"");
+                    if(time_remaining==0){
+                        stage.close();
+                        try {
+                            Solution();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }));
@@ -497,6 +506,7 @@ public class Game extends App{
                                 try{
                                     // register and handle the move via Move method (fix neighboors etc)
                                     Move(x,y);
+                                    Flags.setText("Flags: "+flags+"");
                                     endgame = endGameMove();
                                     // in case of ending game
                                     if (endgame){
@@ -543,16 +553,68 @@ public class Game extends App{
             root.getChildren().add(Flags);
             root.getChildren().add(Mines);
             root.getChildren().add(timesec);
+            
+
+            Button exitgame = new Button("Exit Game");
+            exitgame.setPrefSize(90, 40);
+
+            exitgame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try{
+                        exitgamepressed = true;
+                        LaunchApplication window = new LaunchApplication();
+                        window.menu();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    
+                }
+            });
+
+            Button solutionbutton = new Button("Solution");
+            solutionbutton.setPrefSize(90, 40);
+
+            solutionbutton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try{
+                        exitgamepressed = true;
+                        Solution();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            root.getChildren().add(exitgame);
+            root.getChildren().add(solutionbutton);
 
             // if game in difficulty 1 -> load small window
             if(getDifficulty()==1){
-                Scene scene = new Scene(root, 420, 600);
+                Scene scene = new Scene(root, 420, 620);
+                // grid layout
+                exitgame.setLayoutX(30);
+                exitgame.setLayoutY(550);
+
+                solutionbutton.setLayoutX(250);
+                solutionbutton.setLayoutY(550);
+
                 stage.setScene(scene);
                 stage.show();
             }
             // if game in difficulty 2 -> load large window
             else{
-                Scene scene = new Scene(root, 700, 900);
+                Scene scene = new Scene(root, 700, 920);
+
+                exitgame.setLayoutX(30);
+                exitgame.setLayoutY(850);
+
+                solutionbutton.setLayoutX(250);
+                solutionbutton.setLayoutY(850);
+
                 stage.setScene(scene);
                 stage.show();
             }
@@ -672,6 +734,7 @@ public class Game extends App{
                     btn[i][j].setGraphic(new ImageView(flag));
                 }
                 else{
+                    btn[i][j].setGraphic(new ImageView());
                     btn[i][j].setText(""+getBoardValue(i, j)+"");
                     btn[i][j].setPrefSize(40,40);
                     if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
@@ -689,6 +752,7 @@ public class Game extends App{
             FixNeighboors(i,j);
         }
         else{
+            if(boardvisible[i][j]==flagedcode) flags--;
             boardvisible[i][j] = boardhidden[i][j];
         }
         FixVisible();
@@ -698,10 +762,11 @@ public class Game extends App{
     static void FixNeighboors(int i, int j){
 
         try{
-            if(boardvisible[i][j]!=nondisplayedcode){
+            if(boardvisible[i][j]!=nondisplayedcode && boardvisible[i][j]!=flagedcode){
                 return;
             }
 
+            if(boardvisible[i][j]==flagedcode) flags--;
             boardvisible[i][j] = boardhidden[i][j];
 
             if(i!=0){
@@ -801,9 +866,11 @@ public class Game extends App{
         else{
             if (flags<mines){
                 flags++;
-                // if you flag a supermine
-                if(boardhidden[i][j]==superminecode){
+                // if you flag a supermine in the first 4 moves
+                if(boardhidden[i][j]==superminecode && moves<5){
                     for(int a=0; a<size; a++){
+                        if(boardvisible[i][a]==flagedcode) flags--;
+                        if(boardvisible[a][j]==flagedcode) flags--;
                         boardvisible[i][a]=boardhidden[i][a];
                         boardvisible[a][j]=boardhidden[a][j];
                         if (!btn[i][a].isDisable()) btn[i][a].setDisable(true);
@@ -817,7 +884,6 @@ public class Game extends App{
                             boardvisible[a][j]=visibleminecode;
                             nonvisiblemines--;
                         }
-
                     }
                     boardvisible[i][j]=visiblesuperminecode;
                     //because it passes two times from supermine
