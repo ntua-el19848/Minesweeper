@@ -96,11 +96,12 @@ class LaunchLoad extends App{
 };
 
 // Class that loads the exception window when values in desctiption do not meet the requirements
-class LaunchValueException extends App{
+class LaunchValueException{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/InvalidValueException.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
@@ -114,11 +115,12 @@ class LaunchValueException extends App{
 };
 
 // Class that loads the exception window when description does not meet the requirements
-class LaunchDescriptionException extends App{
+class LaunchDescriptionException{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/InvalidDescriptionException.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
@@ -132,11 +134,12 @@ class LaunchDescriptionException extends App{
 };
 
 // Class that loads the exception window when desctiption not found
-class LaunchFileException extends App{
+class LaunchFileException{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/FileNotFoundException.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
@@ -205,11 +208,12 @@ class LaunchRules extends App{
 };  
 
 // Class that loads when you have lost a game
-class LanuchLostPrompt extends App{
+class LanuchLostPrompt{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/lost.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
@@ -223,11 +227,12 @@ class LanuchLostPrompt extends App{
 };
 
 // Class that loads when you have lost a game
-class LaunchSolutionEmpty extends App{
+class LaunchSolutionEmpty{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/solutionempty.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
@@ -241,11 +246,12 @@ class LaunchSolutionEmpty extends App{
 };
 
 // Class that loads when you have lost a game
-class LanuchWonPrompt extends App{
+class LanuchWonPrompt{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/won.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
@@ -259,11 +265,12 @@ class LanuchWonPrompt extends App{
 };
 
 // Class that loads the exception window when trying to start an invalid game (or not loaded game)
-class LanuchInvalidGameException extends App{
+class LanuchInvalidGameException{
     
     public void menu() throws Exception{
         try{
             Pane root;
+            Stage stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("FXML/invalidGame.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");

@@ -72,6 +72,7 @@
          </font></TextField>
       <TextField fx:id="mines" layoutX="189.0" layoutY="230.0" prefHeight="26.0" prefWidth="170.0" />
       <TextField fx:id="time" layoutX="189.0" layoutY="270.0" prefHeight="26.0" prefWidth="170.0" />
+      <TextField fx:id="supermine" layoutX="189.0" layoutY="310.0" prefHeight="26.0" prefWidth="170.0" promptText="Yes: 1, No: 0" />
       <Button fx:id="creategameButton" layoutX="143.0" layoutY="441.0" mnemonicParsing="false" onAction="#CreateGameAction" prefHeight="34.0" prefWidth="116.0" text="Create Game">
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
@@ -80,7 +81,12 @@
          <font>
             <Font name="MesloLGS NF Regular" size="13.0" />
          </font></Button>
-      <Label layoutX="42.0" layoutY="335.0" prefHeight="58.0" prefWidth="318.0" text="Instructions about creating a valid game are in About-&gt;Rules." textAlignment="JUSTIFY" wrapText="true">
+      <Label layoutX="30.0" layoutY="365.0" prefHeight="58.0" prefWidth="318.0" text="Instructions about creating a valid game are in About-&gt;Rules." textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font name="MesloLGS NF Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="38.0" layoutY="315.0" text="Supermine">
          <font>
             <Font name="MesloLGS NF Regular" size="14.0" />
          </font>

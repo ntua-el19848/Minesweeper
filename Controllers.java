@@ -31,6 +31,8 @@ public class Controllers extends App{
     @FXML
     private TextField difficulty;
     @FXML
+    private TextField supermine;
+    @FXML
     private Button loadgameButton;
     @FXML
     private Button solutionButton;
@@ -71,17 +73,7 @@ public class Controllers extends App{
             String dif = difficulty.getText();
             String mn = mines.getText();
             String t = time.getText();
-            String smn;
-
-            if(dif.equals("1")){
-                smn="0";
-            }   
-            else if(dif.equals("2")){
-                smn="1";
-            }
-            else{
-                smn="-1";
-            }
+            String smn = supermine.getText();
 
             bw.write(dif);
             bw.write("\n");
