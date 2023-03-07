@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,7 +22,7 @@ import javafx.scene.text.Font;
 
 
 // This Class is the game class that manages the initialization, creation, flow of the game
-public class Game{
+public class Game extends App{
 
     /*
     Methods this class  supports:
@@ -44,7 +43,6 @@ public class Game{
     */
 
     //initialize the input with -1 so that i know that if some of these values remain -1 --> InvalidDescriptionException
-    static Stage stage = new Stage();
     static private String scenario;
     static private int difficulty;
     static private int mines;

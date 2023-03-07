@@ -29,18 +29,14 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("FXML/mainMenu.fxml"));
-            stage.setTitle("Minesweeper Medialab");
-            stage.setScene(new Scene(root, 400, 600));
-            stage.show();
+            Parent root = FXMLLoader.load(App.class.getResource("FXML/mainMenu.fxml"));
+            App.stage.setTitle("Minesweeper Medialab");
+            App.stage.setScene(new Scene(root, 400, 600));
+            App.stage.show();
         }
         catch(Exception e){
             e.printStackTrace();
         }
-    }
-
-    public static void close(){
-        stage.close();
     }
 };
 
@@ -48,8 +44,6 @@ public class App extends Application {
 class LaunchApplication extends App{
     public void menu() throws Exception{
         try{
-            LaunchCreate.close();//if coming from create
-            LaunchLoad.close();//if coming from load
             Pane root;
             root = FXMLLoader.load(getClass().getResource("FXML/applicationMenu.fxml"));
             Scene scene = new Scene(root, 400, 600);
@@ -71,7 +65,6 @@ class LaunchApplication extends App{
 class LaunchCreate extends App{
     public void menu() throws Exception{
         try{
-            LaunchApplication.close();
             Pane root;
             root = FXMLLoader.load(getClass().getResource("FXML/createMenu.fxml"));
             Scene scene = new Scene(root, 400, 600);
@@ -83,17 +76,12 @@ class LaunchCreate extends App{
             e.printStackTrace();
         }
     }
-
-    public static void close(){
-        stage.close();
-    }
 };
 
 // Class that loads the load menu to load a game description (checks validity)
 class LaunchLoad extends App{
     public void menu() throws Exception{
         try{
-            LaunchApplication.close();
             Pane root;
             root = FXMLLoader.load(getClass().getResource("FXML/loadMenu.fxml"));
             Scene scene = new Scene(root, 400, 600);
@@ -104,10 +92,6 @@ class LaunchLoad extends App{
         catch(Exception e){
             e.printStackTrace();
         }
-    }
-
-    public static void close(){
-        stage.close();
     }
 };
 
@@ -170,7 +154,6 @@ class LaunchStart extends App{
     
     public void menu() throws Exception{
         try{
-            LaunchApplication.close();
             Pane root;
             root = FXMLLoader.load(getClass().getResource("FXML/startMenu.fxml"));
             Scene scene = new Scene(root, 400, 600);
@@ -183,9 +166,6 @@ class LaunchStart extends App{
         }
     }
 
-    public static void close(){
-        stage.close();
-    }
 };
 
 // Class that loads the details window
@@ -204,10 +184,6 @@ class LaunchDetails extends App{
             e.printStackTrace();
         }
     }
-
-    public static void close(){
-        stage.close();
-    }
 };
 
 // Class that loads the details window
@@ -225,10 +201,6 @@ class LaunchRules extends App{
         catch(Exception e){
             e.printStackTrace();
         }
-    }
-
-    public static void close(){
-        stage.close();
     }
 };  
 
