@@ -71,6 +71,7 @@ public class Game extends App{
     static private int time_remaining;
     static private int nonvisiblemines;
     static private boolean exitgamepressed=false;
+    static private Timeline timeline;
 
     /*  Encoding that I use for the boards
      *  FOR THE HIDDEN BOARD
@@ -92,6 +93,7 @@ public class Game extends App{
     public static void ExitGame(){
         System.out.println("You have exited the current game you were playing!");
         exitgamepressed=true;
+        timeline.stop();
     }
 
     private static void setDifficulty(int x){
@@ -464,7 +466,8 @@ public class Game extends App{
             timesec.setLayoutY(115);
             timesec.setFont(new Font("MesloLGS NF Bold", 16));
 
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                System.out.println("timeline running");
                 if(!exitgamepressed){
                     time_remaining--;
                     timesec.setText("Time: "+time_remaining+"");
@@ -529,11 +532,13 @@ public class Game extends App{
                                             stage.close();
                                             Solution();
                                             WonGame();
+                                            timeline.stop();
                                         }
                                         else if(status==-1){
                                             stage.close();
                                             Solution();
                                             LostGame();
+                                            timeline.stop();
                                         }
                                         else {
                                             // something wrong
@@ -581,6 +586,7 @@ public class Game extends App{
                         exitgamepressed = true;
                         LaunchApplication window = new LaunchApplication();
                         window.menu();
+                        timeline.stop();
                     }
                     catch(Exception e){
                         e.printStackTrace();
@@ -599,6 +605,7 @@ public class Game extends App{
                         exitgamepressed = true;
                         Solution();
                         LostGame();
+                        timeline.stop();
                     }
                     catch(Exception e){
                         e.printStackTrace();
