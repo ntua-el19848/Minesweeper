@@ -679,6 +679,7 @@ public class Game extends App{
                 solutionbutton.setLayoutX(250);
                 solutionbutton.setLayoutY(550);
 
+                stage.setResizable(false);
                 stage.setScene(scene);
                 stage.show();
             }
@@ -692,6 +693,7 @@ public class Game extends App{
                 solutionbutton.setLayoutX(250);
                 solutionbutton.setLayoutY(850);
 
+                stage.setResizable(false);
                 stage.setScene(scene);
                 stage.show();
             }
@@ -767,14 +769,17 @@ public class Game extends App{
             grid.setLayoutX(30);
             grid.setLayoutY(160);
             root.getChildren().add(grid);
+            
             if(getDifficulty()==1){
                 Scene scene = new Scene(root, 420, 600);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
             }
             else{
                 Scene scene = new Scene(root, 700, 900);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
             }
 

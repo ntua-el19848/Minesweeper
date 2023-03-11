@@ -29,6 +29,7 @@ public class App extends Application {
 
     // this is inherited for almost all windows (except exception windows that are pop up)
     protected static Stage stage = new Stage();
+    
 
     //only this window doesnot close after going to other scene. the other buttons automatically close the previous window
     @Override
@@ -37,6 +38,7 @@ public class App extends Application {
             Parent root = FXMLLoader.load(App.class.getResource("FXML/mainMenu.fxml"));
             App.stage.setTitle("Minesweeper Medialab");
             App.stage.setScene(new Scene(root, 400, 600));
+            App.stage.setResizable(false);
             App.stage.show();
         }
         catch(Exception e){
@@ -54,6 +56,7 @@ class LaunchApplication extends App{
             Scene scene = new Scene(root, 400, 600);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -75,6 +78,7 @@ class LaunchCreate extends App{
             Scene scene = new Scene(root, 400, 600);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -92,6 +96,7 @@ class LaunchLoad extends App{
             Scene scene = new Scene(root, 400, 600);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -111,6 +116,7 @@ class LaunchValueException{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -129,6 +135,7 @@ class LaunchDescriptionException{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -147,6 +154,7 @@ class LaunchFileException{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -164,6 +172,7 @@ class LaunchStart extends App{
             Scene scene = new Scene(root, 400, 600);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -182,6 +191,7 @@ class LaunchDetails extends App{
             Scene scene = new Scene(root, 400, 600);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -199,6 +209,7 @@ class LaunchRules extends App{
             Scene scene = new Scene(root, 400, 600);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -217,6 +228,7 @@ class LanuchLostPrompt{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -235,6 +247,7 @@ class LaunchSolutionEmpty{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -253,6 +266,7 @@ class LanuchWonPrompt{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -271,6 +285,7 @@ class LanuchInvalidGameException{
             Scene scene = new Scene(root, 300, 150);
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }
         catch(Exception e){
@@ -448,6 +463,7 @@ class LaunchRounds extends App{
 
             stage.setTitle("Minesweeper Medialab");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
 
         }

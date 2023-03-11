@@ -148,7 +148,6 @@ public class Controllers{
     @FXML
     void SolutionAction(ActionEvent event) throws Exception {
         Game.Solution();
-        Game.LostGame();
     }
 
     @FXML
