@@ -6,7 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class Controllers extends App{
+/*
+ * THIS CLASS "Controllers" controlls the FXML buttons from Scene Builder
+ * handles the events by opening other windows from App class or starting or 
+ * seting up the board for the game
+ * 
+ */
+
+public class Controllers{
 
     @FXML
     private Button createButton;
@@ -47,7 +54,6 @@ public class Controllers extends App{
     //application menu button
     @FXML
     void ApplicationAction(ActionEvent event) throws Exception{//DONE (IT WORKS)
-        stage.close();
         LaunchApplication window = new LaunchApplication();
         window.menu();
     }
@@ -163,7 +169,11 @@ public class Controllers extends App{
         System.exit(0);
     }
 
-
+    /*
+     * The following methods are only called when you press something in the menu bar
+     * from a game that is currently being played.
+     * They are different from the other methods as they also have to exit the current game being played!
+     */
 
 
     // FROM GAME MENU BAR
@@ -201,7 +211,6 @@ public class Controllers extends App{
     @FXML
     void ApplicationActionFromGame(ActionEvent event) throws Exception{//DONE (IT WORKS)
         Game.ExitGame();
-        stage.close();
         LaunchApplication window = new LaunchApplication();
         window.menu();
     }
@@ -213,7 +222,7 @@ public class Controllers extends App{
         LaunchCreate window = new LaunchCreate();
         window.menu();
     }
-            // Load menu button
+    // Load menu button
     @FXML
     void LoadActionFromGame(ActionEvent event) throws Exception{//DONE (IT WORKS)
         Game.ExitGame();

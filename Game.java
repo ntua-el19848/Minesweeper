@@ -30,95 +30,114 @@ import javafx.scene.text.Font;
 
 // This Class is the game class that manages the initialization, creation, flow of the game
 public class Game extends App{
+    // Extends App only to inherit the stage
 
     /*
-    Methods this class  supports:
-    - Setters, Getters...
-    - ValidationCheck (Checks the validity of the scenario and either displayes approriate message or doesnt if all ok!)
-    - SetupBoard (Setup Board and writes to mines.txt the coordinates of the mines, 
-        then calls the other functions to print(debug) and fill the rest of the board)
-    - printhiddenboard (prints the board to the console (for debugging only))
-    - BuildBoard (builds the rest of the board with regard to mine placement)
-    - WriteBoard (writes board to loadedboard.txt)
-    - endGame
-    - StartGame
-    - Solution
-    - FixVisible
-    - Move
-    - FixNeighboors
-    - MarkMine
-    */
-
-    static private int difficulty;
-    static private int mines;
-    static private boolean endgame;
-    static private int status=0; // status=0 (playing), status=1(won), status=-1(lost)
-    static private int size=17;
-    static private int time;
-    static private int supermine;
-    static private int [][] boardvisible = new int[size][size];
-    static private int [][] boardhidden = new int[size][size];
-    static final int minecode=-1;
-    static final int superminecode=-2;
-    static final int nondisplayedcode=-10;
-    static final int flagedcode=200;
-    static final int visibleminecode=-5;
-    static final int visiblesuperminecode=-6;
-    static private boolean scenario_validity = false;
-    static private Button btn[][] = new Button[size][size];
-    static private int moves=0;
-    static private int flags=0;
-    static private int time_remaining;
-    static private int nonvisiblemines;
-    static private boolean exitgamepressed=false;
-    static private Timeline timeline;
-
-    /*  Encoding that I use for the boards
-     *  FOR THE HIDDEN BOARD
-     *  minecode --> integer that i have assigned (non used) to know if its a mine = -1
-     *  superminecode --> integer that i have assigned (non used) to know if its a mine == -2
-     *  FOR THE VISIBLE BOARD
-     *  CODE 200 --> marked as mine
-     *  CODE -10 --> hidden
-     *  in any other case it takes the value of the hidden board
+     *     Methods this class  supports:
+     * - Setters, Getters, Initializators...
+     *
+     * - ValidationCheck (Checks the validity of the scenario and either displayes approriate message or doesnt if all ok!)
+     * 
+     * - SetupBoard (Setup Board and writes to mines.txt the coordinates of the mines, 
+     *   then calls the other functions to print(debug) and fill the rest of the board)
+     *
+     * - printhiddenboard (prints the board to the console (for debugging only))
+     * 
+     * - BuildBoard (builds the rest of the board with regard to mine placement)
+     * 
+     * - WriteBoard (writes board to loadedboard.txt (debugging))
+     * 
+     * - endGame (checks whether the game has ended or not)
+     * 
+     * - StartGame (Starts the game)
+     * 
+     * - Solution (Displayes the solution)
+     * 
+     * - FixVisible (Displayes the approriate icons in buttons depending of the current state of the board)
+     * 
+     * - Move (handles clicks from the user)
+     * 
+     * - FixNeighboors (recursively opens all nearby zeros)
+     * 
+     * - MarkMine (handles right click -> mark as flag)
      */
+
+    // Private Fields
+    static private int difficulty; // holds difficulty
+    static private int mines; // number of mines
+    static private boolean endgame; // true -> THE GAME HAS ENDED, false -> THE GAME IS BEING PLAYED OR INITIALIZED
+    static private int status=0; // status=0 (playing), status=1(won), status=-1(lost)
+    static private int size=17; // size of the board
+    static private int time; // time for 1 game
+    static private int supermine; // 0 -> no supermine, 1 -> supermine (needs to be int for validation)
+    static private int [][] boardvisible = new int[size][size]; // visible board --> board that user sees
+    static private int [][] boardhidden = new int[size][size]; // hidden board --> board that holds the solution
+    static private boolean scenario_validity = false; // holds a boolean about if a scenario is valid or not
+    static private Button btn[][] = new Button[size][size]; // button array that holds the board
+    static private int moves=0; // moves counter
+    static private int flags=0; // flags counter
+    static private int time_remaining; // time_remaining that is initialized = time and decreases every second
+    static private int nonvisiblemines; // number of nonvisible mines (is required due to reveal of mines from marking supermine)
+    static private Timeline timeline; // timeline that decreases the time_remaining
+
+    /*
+     * The following are some codes for the hidden and visible board that hold the information
+     * about a current box (e.g. boardhidden[1][1]=-1 --> at (1,1) there is a mine). 
+     * 
+     * Integer codes that mean something by aggreement. Everywhere in the program those codes are referenced
+     * by their following names! For good practise
+     */
+    static final int minecode=-1; // there is a mine here
+    static final int superminecode=-2; // there is a supermine here
+    static final int nondisplayedcode=-10; // this box hasnt been opened yet 
+    static final int flagedcode=200; // this box is currently flagged
+    static final int visibleminecode=-5; // this mine has been revealed (only if you mark a supermine)
+    static final int visiblesuperminecode=-6; // this supermine has been revealed (only if you mark a supermine)
+
 
     // Setters
-    
-
-
     /*
-     * 
+     * Public method --> because it is called from other classes (Controllers) that have no inheritance 
+     * Returns --> Nothing
+     * Purpose --> To Exit the current game that is being played. By stoping the timeline (timer of the game).
      */
     public static void ExitGame(){
-        System.out.println("You have exited the current game you were playing!");
-        exitgamepressed=true;
         timeline.stop();
+        flags = 0;
+        moves = 0;
+        status = 0;
+        endgame = false;
     }
 
+    // sets the difficulty and size of the board
     private static void setDifficulty(int x){
         difficulty = x;
         // initilize size and board based on difficulty
         if(x==1) size=9;
         if(x==2) size=16;
     }
-
+    
+    // sets number of mines
     private static void setMines(int x){
         mines = x;
     }
 
+    // sets supermine value
     private static void setSupermine(int x){
         supermine = x;
     }
 
+    // sets time
     private static void setTime(int x){
         time = x;
     }
 
+    // sets scenario_validity
     private static void setScenarioValidity(boolean x){
         scenario_validity = x;
     }
 
+    // Initialized visible board with nondisplaycode
     private static void InitializeVisibleBoard(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
@@ -128,6 +147,7 @@ public class Game extends App{
         }
     }
 
+    // initializes buttons
     private static void InitializeButtons(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
@@ -137,6 +157,7 @@ public class Game extends App{
         }
     }
 
+    // initializes hidden board with zeros
     private static void InitializeHiddenBoard(){
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
@@ -145,34 +166,44 @@ public class Game extends App{
             }
         }
     }
+
+
     // Getters
+    
+    // returns difficulty
     private static int getDifficulty(){
         return difficulty;
     }
 
+    // returns number of mines
     private static int getMines(){
         return mines;
     }
 
+    // returns
     private static int getSupermine(){
         return supermine;
     }
-
+    
+    // returns time
     private static int getTime(){
         return time;
     }
 
     /*
-     * 
+     * Public method -> because it is called by controllers for whether to start the game or display appropriate pop up message
+     * Returns --> boolean value (true -> Game valid, false -> not valid)
      */
     public static boolean getScenarioValidity(){
         return scenario_validity;
     }
 
+    //returns visible board value for certain coordinates
     private static int getBoardValue(int i, int j){
         return boardvisible[i][j];
     }
 
+    //returns hidden board value for certain coordinates
     private static int getHiddenBoardValue(int i, int j){
         return boardhidden[i][j];
     }
@@ -185,22 +216,23 @@ public class Game extends App{
      */
     public static void ValidationCheck(String scenario) throws Exception { 
         try{
+            // read from file with name of parameter
             File input = new File("medialab/"+scenario+".txt");
             Scanner scan = new Scanner(input);
 
-            // initialize with -1 just for the description check.
+            // initialize with -1 just for the description check. if it is left -1 --> it means lines are missing
             setDifficulty(-1);
             setMines(-1);
             setTime(-1);
             setSupermine(-1);
 
-            // these are special resetes
+            // Initialize everything - start brand new (no junk values from previous game)
             InitializeVisibleBoard();
             InitializeButtons();
             flags = 0;
             moves = 0;
             
-            // Invalid Description Exception Check!
+            // Get every value from txt
             if(scan.hasNext()) setDifficulty(scan.nextInt());
             if(scan.hasNext()) setMines(scan.nextInt());
             nonvisiblemines=mines;
@@ -208,6 +240,7 @@ public class Game extends App{
             if(scan.hasNext()) setSupermine(scan.nextInt());
             scan.close();
 
+            // Invalid Description Exception Check!
             if (getDifficulty() == -1 || getMines() == -1 || getTime() == -1 || getSupermine() == -1){
                 LaunchDescriptionException window = new LaunchDescriptionException();
                 window.menu();
@@ -215,13 +248,16 @@ public class Game extends App{
             }
 
             // Invalid Value Exception Check!
+            // Initalize valid = true
             boolean valid=true;
             switch(getDifficulty()){
+                // constaints for easy game
                 case 1: {if (getMines() > 11 || getMines() < 9 || getTime() < 120 || getTime() > 180 || getSupermine() != 0){
                                 valid=false;
                             }
                             else break;
                         }
+                // constaints for hard game
                 case 2: {if (getMines() > 45 || getMines() < 35 || getTime() < 240 || getTime() > 360 || getSupermine() > 1 || getSupermine() < 0) {
                                 valid=false;
                             }
@@ -259,6 +295,7 @@ public class Game extends App{
         //and write the coordinates of the mines in the mines.txt file
         //this function only randomly generates mine placement and does not fill the entire board!
 
+        // writes coordinates of mines to mines.txt 
         File minesfile = new File("mines/mines.txt");
         minesfile.createNewFile();
         FileWriter fw = new FileWriter(minesfile.getAbsoluteFile());
@@ -329,10 +366,10 @@ public class Game extends App{
             }
         }
 
-        bw.close();
-        BuildBoard();
+        bw.close(); // close fd
+        BuildBoard(); // build the rest of the board according to mine placement
         printhiddenboard(); // debugging purpose
-        WriteBoard();
+        WriteBoard(); // writes board to loadedboard.txt
     }
 
     // Prints the hidden board DEBUGGING REASONS
@@ -422,6 +459,7 @@ public class Game extends App{
 
     // Condition that checks whether the game has ended or not
     private static boolean endGameMove(){
+        // if some mine is pressed endgame with status -1 -> LOST
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
                 if (boardvisible[i][j]==minecode || boardvisible[i][j]==superminecode){
@@ -432,6 +470,7 @@ public class Game extends App{
             }
         }
 
+        // for every box that is not visible or flaged count up -> if the count = with the number of non visible mines then -> WON
         int cnt = 0;
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
@@ -442,6 +481,7 @@ public class Game extends App{
             status = 1;
             return true;
         }
+        // else the game is still playing
         return false;
     }
 
@@ -451,34 +491,38 @@ public class Game extends App{
      */
     public static void StartGame() throws Exception{
         try{
-            exitgamepressed = false;
-
             // initialize root Pane 
             Pane root = new Pane();
             // initialize stage
             root = FXMLLoader.load(Game.class.getResource("FXML/board.fxml"));
             stage.setTitle("Minesweeper Game");
 
-            // label for time
+
+            // initialize time_remaining = time
             time_remaining=time;
+
+            // label for time
             Label timesec = new Label("Time: "+time+"");
             timesec.setLayoutX(50);
             timesec.setLayoutY(115);
             timesec.setFont(new Font("MesloLGS NF Bold", 16));
 
+            // Timeline that makes the time running
             timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-                System.out.println("timeline running");
-                if(!exitgamepressed){
+                // every second reduce the time_remaining
+                try{
                     time_remaining--;
                     timesec.setText("Time: "+time_remaining+"");
+                    // if time_remaining = 0 -> you lost
                     if(time_remaining==0){
-                        stage.close();
-                        try {
-                            Solution();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        Solution(); // open solution
+                        LostGame(); // register as loss and pop up lost message
+                        ExitGame(); // leave no junk and stop time
                     }
+                } 
+                catch (Exception e) {
+                    System.out.println("Something wrong in the timeline!");
+                    e.printStackTrace();
                 }
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
@@ -516,6 +560,7 @@ public class Game extends App{
 
                         @Override
                         public void handle(MouseEvent event) {
+                            // for recognising the left click and right click
                             MouseButton button = event.getButton();
 
                             // if you press left click
@@ -523,22 +568,26 @@ public class Game extends App{
                                 try{
                                     // register and handle the move via Move method (fix neighboors etc)
                                     Move(x,y);
+
+                                    // sync flags
                                     Flags.setText("Flags: "+flags+"");
+
+                                    // check if this move ended the game
                                     endgame = endGameMove();
+
                                     // in case of ending game
                                     if (endgame){
                                         if(status==1){
                                             //won
-                                            stage.close();
-                                            Solution();
-                                            WonGame();
-                                            timeline.stop();
+                                            Solution(); // preview the solution
+                                            WonGame(); // pop up win message and register as win
+                                            ExitGame(); // leave no junk and stop time
                                         }
                                         else if(status==-1){
-                                            stage.close();
-                                            Solution();
-                                            LostGame();
-                                            timeline.stop();
+                                            // lost
+                                            Solution(); // preview the solution
+                                            LostGame(); // pop up lost message and register as loss
+                                            ExitGame(); // leave no junk and stop time
                                         }
                                         else {
                                             // something wrong
@@ -575,18 +624,20 @@ public class Game extends App{
             root.getChildren().add(Mines);
             root.getChildren().add(timesec);
             
-
+            // Button exit game that is in the game stage
             Button exitgame = new Button("Exit Game");
             exitgame.setPrefSize(90, 40);
 
+            // exit game button event
             exitgame.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     try{
-                        exitgamepressed = true;
+                        // go to application window
                         LaunchApplication window = new LaunchApplication();
                         window.menu();
-                        timeline.stop();
+                        // stop the time from running
+                        ExitGame(); // leave no junk and stop time
                     }
                     catch(Exception e){
                         e.printStackTrace();
@@ -595,17 +646,18 @@ public class Game extends App{
                 }
             });
 
+            // Solution Button
             Button solutionbutton = new Button("Solution");
             solutionbutton.setPrefSize(90, 40);
-
+            
+            // Solution Button event
             solutionbutton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     try{
-                        exitgamepressed = true;
-                        Solution();
-                        LostGame();
-                        timeline.stop();
+                        Solution(); // view solution
+                        LostGame(); // mark as loss and pop up lost prompt
+                        ExitGame(); // leave no junk and stop time
                     }
                     catch(Exception e){
                         e.printStackTrace();
@@ -613,6 +665,7 @@ public class Game extends App{
                 }
             });
 
+            // add buttons to pane
             root.getChildren().add(exitgame);
             root.getChildren().add(solutionbutton);
 
@@ -655,6 +708,7 @@ public class Game extends App{
     public static void Solution() throws Exception{
         // the game has to be played once to show solution
         try{
+            // if board is empty do not show zeros as solution -> POP UP prompt with no solution
             boolean boardempty=true;
             for(int i=0; i<size; i++){
                 for(int j=0; j<size; j++){
@@ -670,10 +724,14 @@ public class Game extends App{
                 return;
             }
 
+            // if not empty
+
+            // load pane and FXML
             Pane root = new Pane();
             root = FXMLLoader.load(Game.class.getResource("FXML/solution.fxml"));
             stage.setTitle("Minesweeper Game");
 
+            // initialize buttons array 
             Button[][] sol = new Button[size][size];
             Image mine = new Image(Game.class.getResourceAsStream("images/mine.jpg"));
             Image supermine = new Image(Game.class.getResourceAsStream("images/supermine.jpg"));
@@ -729,36 +787,44 @@ public class Game extends App{
 
     // fixes the visible board in button array  
     private static void FixVisible(){
-        // initialize buttons
-        // for every button put the right value 
+
+        // load images for flag, mine, supermine
         Image mine = new Image(Game.class.getResourceAsStream("images/mine.jpg"));
         Image supermine = new Image(Game.class.getResourceAsStream("images/supermine.jpg"));
         Image flag = new Image(Game.class.getResourceAsStream("images/flag.jpg"));
+
+        // for every button
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
+                // if mine or visible mine -> load mine image
                 if(getBoardValue(i,j)==minecode || getBoardValue(i, j)==visibleminecode){
                     btn[i][j].setPrefSize(40,40);
                     btn[i][j].setGraphic(new ImageView(mine));
                     if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
                 }
+                // if supermine or visible supermine -> load mine image
                 else if(getBoardValue(i,j)==superminecode || getBoardValue(i, j)==visiblesuperminecode){
                     btn[i][j].setPrefSize(40,40);
                     btn[i][j].setGraphic(new ImageView(supermine));
                     if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
                 }
+                // if zero -> empty box (opened)
                 else if(getBoardValue(i, j)==0){
                     btn[i][j].setGraphic(new ImageView());
                     btn[i][j].setPrefSize(40,40);
                     if (!btn[i][j].isDisable()) btn[i][j].setDisable(true);
                 }
+                // if not opened -> not opened, not disabled
                 else if(getBoardValue(i, j)==nondisplayedcode){
                     btn[i][j].setGraphic(new ImageView());
                     btn[i][j].setPrefSize(40,40);
                 }
+                // if flagged -> load flag image
                 else if(getBoardValue(i, j)==flagedcode){
                     btn[i][j].setPrefSize(40, 40);
                     btn[i][j].setGraphic(new ImageView(flag));
                 }
+                // else load value number
                 else{
                     btn[i][j].setGraphic(new ImageView());
                     btn[i][j].setText(""+getBoardValue(i, j)+"");
@@ -771,6 +837,7 @@ public class Game extends App{
 
     // Move Method
     private static void Move(int i, int j){
+        // move counter increase
         moves++;
 
         // if you press a zero calculate which blocks should open as well
@@ -940,14 +1007,7 @@ public class Game extends App{
             bw.write(""+mines+" "+moves+" "+time+" Computer");
             bw.close();
 
-            // clear everything for new game and launch lost window
-            InitializeVisibleBoard();
-            InitializeButtons();
-            InitializeHiddenBoard();
-            flags = 0;
-            moves = 0;
-            status = 0;
-            endgame = false;
+
             LanuchLostPrompt window = new LanuchLostPrompt();
             window.menu();
         }
@@ -967,14 +1027,6 @@ public class Game extends App{
             bw.write(""+mines+" "+moves+" "+time+" Human");
             bw.close();
 
-            // clear everything for new game and launch lost window
-            InitializeVisibleBoard();
-            InitializeButtons();
-            InitializeHiddenBoard();
-            flags = 0;
-            moves = 0;
-            status = 0;
-            endgame = false;
             LanuchWonPrompt window = new LanuchWonPrompt();
             window.menu();
         }

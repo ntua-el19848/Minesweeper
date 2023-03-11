@@ -12,17 +12,22 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
-// THIS .java FILE CONTAINS ALL THE CODE FOR GENERATING JAVAFX WINDOWS AND NOTHING ELSE....
+// THIS .java FILE CONTAINS ALL THE CODE FOR GENERATING JAVAFX WINDOWS AND CALCULATING ROUNDS WINDOW FROM LOG....
 // THE MEANINGFULL CODE THAT RUNS THE BOARD AND THE GAME IS IN THE Game.java
 
 
-// App class that is first loaded and loads the main Menu of the game
+// App class that is first loaded and loads the MAIN Menu of the game
 public class App extends Application {
-    
+    /*
+     * Public
+     * Returns Nothing
+     * Used to start main window
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    // this is inherited for almost all windows (except exception windows that are pop up)
     protected static Stage stage = new Stage();
 
     //only this window doesnot close after going to other scene. the other buttons automatically close the previous window
@@ -116,7 +121,6 @@ class LaunchValueException{
 
 // Class that loads the exception window when description does not meet the requirements
 class LaunchDescriptionException{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -135,7 +139,6 @@ class LaunchDescriptionException{
 
 // Class that loads the exception window when desctiption not found
 class LaunchFileException{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -154,7 +157,6 @@ class LaunchFileException{
 
 // Class that loads the start game window
 class LaunchStart extends App{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -173,7 +175,6 @@ class LaunchStart extends App{
 
 // Class that loads the details window
 class LaunchDetails extends App{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -191,7 +192,6 @@ class LaunchDetails extends App{
 
 // Class that loads the details window
 class LaunchRules extends App{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -209,7 +209,6 @@ class LaunchRules extends App{
 
 // Class that loads when you have lost a game
 class LanuchLostPrompt{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -228,7 +227,6 @@ class LanuchLostPrompt{
 
 // Class that loads when you have lost a game
 class LaunchSolutionEmpty{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -247,7 +245,6 @@ class LaunchSolutionEmpty{
 
 // Class that loads when you have lost a game
 class LanuchWonPrompt{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -266,7 +263,6 @@ class LanuchWonPrompt{
 
 // Class that loads the exception window when trying to start an invalid game (or not loaded game)
 class LanuchInvalidGameException{
-    
     public void menu() throws Exception{
         try{
             Pane root;
@@ -284,7 +280,6 @@ class LanuchInvalidGameException{
 };
 
 class LaunchRounds extends App{
-    
     public void menu() throws Exception{
         try{
             BufferedReader br = new BufferedReader(new FileReader("roundslog/log"));
