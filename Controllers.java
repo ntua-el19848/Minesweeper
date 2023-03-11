@@ -142,6 +142,7 @@ public class Controllers extends App{
     @FXML
     void SolutionAction(ActionEvent event) throws Exception {
         Game.Solution();
+        Game.LostGame();
     }
 
     @FXML
@@ -179,6 +180,7 @@ public class Controllers extends App{
     void SolutionActionFromGame(ActionEvent event) throws Exception {
         Game.ExitGame();
         Game.Solution();
+        Game.LostGame();
     }
 
     @FXML

@@ -90,6 +90,7 @@ public class Game extends App{
      * 
      */
     public static void ExitGame(){
+        System.out.println("You have exited the current game you were playing!");
         exitgamepressed=true;
     }
 
@@ -526,11 +527,13 @@ public class Game extends App{
                                         if(status==1){
                                             //won
                                             stage.close();
+                                            Solution();
                                             WonGame();
                                         }
                                         else if(status==-1){
                                             stage.close();
                                             Solution();
+                                            LostGame();
                                         }
                                         else {
                                             // something wrong
@@ -595,6 +598,7 @@ public class Game extends App{
                     try{
                         exitgamepressed = true;
                         Solution();
+                        LostGame();
                     }
                     catch(Exception e){
                         e.printStackTrace();
@@ -702,13 +706,11 @@ public class Game extends App{
                 Scene scene = new Scene(root, 420, 600);
                 stage.setScene(scene);
                 stage.show();
-                LostGame();
             }
             else{
                 Scene scene = new Scene(root, 700, 900);
                 stage.setScene(scene);
                 stage.show();
-                LostGame();
             }
 
         
@@ -921,7 +923,7 @@ public class Game extends App{
     }
 
     // Lost Game
-    private static void LostGame(){
+    public static void LostGame(){
         //lost
         // store results to log
         try{
@@ -973,6 +975,7 @@ public class Game extends App{
             System.out.println(e);
         }
     }
+
 };
 
 // EXCEPTION CLASSES
