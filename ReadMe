@@ -1,7 +1,5 @@
 Minesweeper Executing Instructions
 
-(Provided you want to compile as well => If you DONT want to complile make sure you have all 22 .class files and run the App.class - NOT RECOMMENDED)
-
 Linux - Mac
 - Install Fonts in fonts folder
 - Install JDK
