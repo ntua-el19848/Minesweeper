@@ -26,8 +26,6 @@ import javafx.scene.text.Font;
  * javadoc[3]
  */
 
-
-
 // This Class is the game class that manages the initialization, creation, flow of the game
 public class Game extends App{
     // Extends App only to inherit the stage
@@ -99,7 +97,11 @@ public class Game extends App{
     /*
      * Public method --> because it is called from other classes (Controllers) that have no inheritance 
      * Returns --> Nothing
-     * Purpose --> To Exit the current game that is being played. By stoping the timeline (timer of the game).
+     * Parameters --> No Parameters
+     * Static !
+     * Throws Exception --> No
+     * Purpose --> To Exit the current game that is being played. By stoping the timeline 
+     *             (timer of the game) and resetting all usefull variables between every game.
      */
     public static void ExitGame(){
         timeline.stop();
@@ -191,7 +193,11 @@ public class Game extends App{
     }
 
     /*
-     * Public method -> because it is called by controllers for whether to start the game or display appropriate pop up message
+     * Public method -> because it is called by controllers for 
+     *                  whether to start the game or display appropriate pop up message
+     * Parameters --> Nothing
+     * Static !
+     * Throws Exception --> No
      * Returns --> boolean value (true -> Game valid, false -> not valid)
      */
     public static boolean getScenarioValidity(){
@@ -210,9 +216,14 @@ public class Game extends App{
 
     // Other Methods
 
-    // Initializes the variables from input and checks for the right values.
-    /*
-     * 
+    /* Public Method -> because it is called from controllers at Load Stage
+     * Parameters --> String (Scenario name)
+     * Returns --> Nothing
+     * Static !
+     * Throws Exception --> Yes
+     * Purpose --> To check the validity of the scenario description and either accept it
+     *             (and initialize mines, time etc..) or reject it and throw InvalidValueException
+     *             or InvalidDescriptionException
      */
     public static void ValidationCheck(String scenario) throws Exception { 
         try{
@@ -283,9 +294,14 @@ public class Game extends App{
         }
     }
 
-    // It setups the mines and calls the BuildBoard to fill the other boxes and writes it to BOARD folder
-    /*
-     * 
+    /* Public Method -> because it is called from controllers at Start Stage
+     * Parameters --> Nothing
+     * Returns --> Nothing
+     * Throws Exception --> Yes
+     * Static !
+     * Purpose --> Setups board with mines randomly placed and writes the coordinates to mines.txt
+     *             , then calls other private functions to fill the rest of the board with regard to
+     *             mine placement. 
      */
     public static void setupBoard() throws Exception{ 
         InitializeHiddenBoard();
@@ -368,7 +384,7 @@ public class Game extends App{
 
         bw.close(); // close fd
         BuildBoard(); // build the rest of the board according to mine placement
-        printhiddenboard(); // debugging purpose
+        //printhiddenboard(); // debugging purpose
         WriteBoard(); // writes board to loadedboard.txt
     }
 
@@ -485,9 +501,13 @@ public class Game extends App{
         return false;
     }
 
-    // method that runs when game is being started
-    /*
-     * 
+    /* Public Method -> because it is called from controllers at Start Stage
+     * Parameters --> Nothing
+     * Returns --> Nothing
+     * Throws Exception --> Yes
+     * Static !
+     * Purpose --> Launches the game interface and handles all on click events and timeline.
+     *             Uses many private (helping) functions to achieve this (e.g. endGame, Move...)
      */
     public static void StartGame() throws Exception{
         try{
@@ -703,9 +723,13 @@ public class Game extends App{
         }
     }
 
-    // method called to retrieve solution
-    /*
-     * 
+    /* Public Method -> because it is called from controllers at Solution Stage
+     * Parameters --> Nothing
+     * Returns --> Nothing
+     * Throws Exception --> Yes
+     * Static !
+     * Purpose --> Launches the interface that displayes the solution of the 
+     *             game that was previously started. 
      */
     public static void Solution() throws Exception{
         // the game has to be played once to show solution
@@ -1001,7 +1025,13 @@ public class Game extends App{
         FixVisible();
     }
 
-    // Lost Game
+    /* Public Method -> because it is called from controllers at Solution Stage
+     * Parameters --> Nothing
+     * Returns --> Nothing
+     * Throws Exception --> No
+     * Static !
+     * Purpose --> Marks the game as lost in the log. 
+     */
     public static void LostGame(){
         //lost
         // store results to log
